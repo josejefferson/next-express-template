@@ -1,0 +1,61 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@next/next/recommended",
+    "eslint:recommended",
+    "eslint-config-prettier"
+  ],
+  "root": true,
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "ignorePatterns": ["*.js"],
+  "parserOptions": {
+    "allowImportExportEverywhere": true,
+    "sourceType": "module",
+    "ecmaVersion": 13,
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "rules": {
+    "@next/next/no-img-element": "off",
+    "comma-dangle": ["warn", "never"],
+    "jsx-quotes": ["warn", "prefer-double"],
+    "linebreak-style": "off",
+    "no-inner-declarations": "off",
+    "no-redeclare": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
+    "quotes": ["warn", "single"],
+    "react/display-name": "off",
+    "react/no-children-prop": "off",
+    "semi": ["warn", "never"],
+    "camelcase": [
+      "off",
+      {
+        "properties": "always"
+      }
+    ],
+    "import/no-anonymous-default-export": [
+      2,
+      {
+        "allowArrowFunction": true
+      }
+    ],
+    "indent": [
+      "off",
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "no-empty": [
+      "warn",
+      {
+        "allowEmptyCatch": true
+      }
+    ]
+  }
+}

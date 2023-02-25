@@ -1,0 +1,136 @@
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  height: 100vh;
+}
+
+/* NProgress */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: var(--chakra-colors-orange-300);
+  position: fixed;
+  z-index: 1500;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+}
+
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0;
+  width: 100px;
+  height: 100%;
+  opacity: 1;
+  -webkit-transform: rotate(3deg) translate(0, -4px);
+  -ms-transform: rotate(3deg) translate(0, -4px);
+  transform: rotate(3deg) translate(0, -4px);
+}
+
+#nprogress .spinner {
+  display: none;
+  position: fixed;
+  z-index: 1500;
+  left: 20px;
+  bottom: 20px;
+}
+
+#nprogress .spinner-icon {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-top-color: var(--chakra-colors-orange-300);
+  border-left-color: var(--chakra-colors-orange-300);
+  border-radius: 50%;
+  -webkit-animation: nprogress-spinner 400ms linear infinite;
+  animation: nprogress-spinner 400ms linear infinite;
+}
+
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+.nprogress-custom-parent #nprogress .bar,
+.nprogress-custom-parent #nprogress .spinner {
+  position: absolute;
+}
+
+@-webkit-keyframes nprogress-spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.login-success.animate {
+  animation: login-success-anim 1s ease;
+  animation-fill-mode: both;
+}
+
+.login-success.animate .login-success-name {
+  animation: login-success-name-anim 1s ease;
+  animation-fill-mode: both;
+}
+
+@keyframes login-success-anim {
+  from {
+    opacity: 0;
+    width: 200px;
+    height: 200px;
+    transform: scale(0);
+  }
+
+  25% {
+    opacity: 1;
+    width: 200px;
+    height: 200px;
+    transform: scale(1);
+  }
+
+  50%,
+  to {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--chakra-radii-lg);
+  }
+}
+
+@keyframes login-success-name-anim {
+  from,
+  50% {
+    opacity: 0;
+    font-size: 0px;
+    margin-top: 0;
+  }
+
+  75% {
+    font-size: var(--chakra-fontSizes-lg);
+    margin-top: var(--chakra-space-3);
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

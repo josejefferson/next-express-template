@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: Preparing GitHub Action
+        uses: actions/checkout@v2
+
+      - name: Preparing Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Installing Yarn
+        run: npm install -g yarn
+
+      - name: Installing dependencies
+        run: yarn
+
+      - name: Building
+        run: yarn build
+
+      - name: Exporting
+        run: yarn export
