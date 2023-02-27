@@ -29,11 +29,20 @@ import {
 } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { MdArrowBack, MdDarkMode, MdLightMode } from 'react-icons/md'
-import useUser from '../../hooks/useUser'
+import { useAuth } from '../../contexts/auth'
 import { getAvatarColor } from '../../utils/helpers'
 import MyDrawer from './drawer'
+
+interface IProps {
+  title?: string
+  showBackButton?: boolean
+  hideMenuButton?: boolean
+  hideUser?: boolean
+  customButtons?: ReactNode
+  hideChangePasswordPopover?: boolean
+}
 
 export default function Nav({
   title,
@@ -42,15 +51,15 @@ export default function Nav({
   hideUser,
   customButtons,
   hideChangePasswordPopover
-}: any) {
-  const { user, loadingUser, login, logout } = useUser()
+}: IProps) {
+  const { user, loading, login, logout } = useAuth()
   const { colorMode, toggleColorMode } = useColorMode()
   const changePasswordPopover = useDisclosure()
   useEffect(() => {
-    if (!hideChangePasswordPopover && !loadingUser && user && user?.requirePasswordChange) {
+    if (!hideChangePasswordPopover && !loading && user && user?.requirePasswordChange) {
       changePasswordPopover.onOpen()
     }
-  }, [loadingUser])
+  }, [loading])
 
   return (
     <>
@@ -111,7 +120,7 @@ export default function Nav({
                 <Menu>
                   <MenuButton rounded="full" cursor="pointer" minW={0} ml={1} textDecoration="none">
                     <>
-                      <SkeletonCircle size="8" hidden={!loadingUser} />
+                      <SkeletonCircle size="8" hidden={!loading} />
                       <Popover
                         returnFocusOnClose={false}
                         isOpen={changePasswordPopover.isOpen}
@@ -126,7 +135,7 @@ export default function Nav({
                             size="sm"
                             name={user?.name}
                             src={user?.photo}
-                            hidden={loadingUser}
+                            hidden={loading}
                           />
                         </PopoverTrigger>
                         <Portal>

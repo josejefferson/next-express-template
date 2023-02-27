@@ -1,10 +1,12 @@
-import { Box, useColorModeValue } from '@chakra-ui/react'
-import { useAPI } from '../../../contexts/api'
-import { IUser } from '../../../types/user'
+import { Box } from '@chakra-ui/layout'
+import { useColorModeValue } from '@chakra-ui/react'
+import { useResourceList } from '.'
+import { useAPI } from '../api'
 
 export default function StatusBar() {
-  const users: IUser[] = useAPI().data
   const bgColor = useColorModeValue('gray.200', 'gray.700')
+  const length: number = useAPI().data.length
+  const { name, namePlural } = useResourceList()
 
   return (
     <>
@@ -22,8 +24,8 @@ export default function StatusBar() {
         userSelect="none"
       >
         <span>
-          {users.length} usuário{users.length !== 1 && 's'}
-        </span>{' '}
+          {length} {length === 1 ? name.toLowerCase() : namePlural.toLowerCase()}
+        </span>
       </Box>
     </>
   )

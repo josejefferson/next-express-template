@@ -3,11 +3,11 @@ import Link from 'next/link'
 import { IconType } from 'react-icons'
 import Nav from '../components/navbar'
 import { MENU } from '../components/navbar/drawer'
-import useUser from '../hooks/useUser'
+import { useAuth } from '../contexts/auth'
 import { getTimeSaudation } from '../utils/helpers'
 
 export default function Main() {
-  const { user } = useUser()
+  const { user } = useAuth()
 
   return (
     <>

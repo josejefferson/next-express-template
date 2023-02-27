@@ -9,6 +9,7 @@ import NProgress from 'nprogress'
 import { useEffect } from 'react'
 import { CookiesProvider } from 'react-cookie'
 import { IconContext } from 'react-icons'
+import AuthProvider from '../contexts/auth'
 import '../styles/globals.css'
 import { theme } from '../utils/theme'
 
@@ -27,7 +28,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <IconContext.Provider value={{ size: '24' }}>
       <CookiesProvider>
         <ChakraProvider theme={theme}>
-          <Component {...pageProps} />
+          <AuthProvider>
+            <Component {...pageProps} />
+          </AuthProvider>
         </ChakraProvider>
       </CookiesProvider>
     </IconContext.Provider>

@@ -3,19 +3,21 @@ import { useRouter } from 'next/router'
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react'
 import Failed from '../components/common/failed'
 import Loading from '../components/common/loading'
-import { IValue } from '../types/api'
 import api from '../utils/api'
 import { getLoginURL } from '../utils/helpers'
 
-export const APIContext = createContext<IValue>({
-  loading: true,
-  error: null,
-  data: null,
-  refresh: () => {},
-  setData: () => {}
-})
+export interface IValue {
+  loading: boolean
+  error: any
+  data: any
+  refresh: () => void
+  setData: (data: any) => void
+}
 
-interface IProps {
+export const APIContext = createContext<IValue>(null as any)
+export const useAPI = () => useContext(APIContext)
+
+export interface IProps {
   children: ReactNode
   before?: ReactNode
   after?: ReactNode
@@ -59,6 +61,7 @@ export default function API({
       api
         .get(url, axiosOptions || {})
         .then((value) => {
+          if (value.data === null) throw new Error('Esta entidade não existe')
           const data = axiosThen?.(value) ?? value.data
           setData(data)
           setError(null)
@@ -93,5 +96,3 @@ export default function API({
     </>
   )
 }
-
-export const useAPI = () => useContext(APIContext)

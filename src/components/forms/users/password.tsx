@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, Input } from '@chakra-ui/react'
 import { FastField, FieldProps, useFormikContext } from 'formik'
-import fp from '../../../../utils/ultra-fast-field-props'
+import fp from '../../../utils/ultra-fast-field-props'
 
 function Password() {
   const { values }: any = useFormikContext()

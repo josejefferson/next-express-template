@@ -5,7 +5,7 @@ import Nav from '../components/navbar'
 
 export default function Error404() {
   const router = useRouter()
-  const title = router.query.t
+  const title = router.query.t as string
   const desc = router.query.d
 
   return (

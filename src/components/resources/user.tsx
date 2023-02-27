@@ -8,26 +8,18 @@ import {
   Tooltip,
   useColorModeValue
 } from '@chakra-ui/react'
-import { MdDelete } from 'react-icons/md'
-import { MdOpenInNew } from 'react-icons/md'
 import Link from 'next/link'
-import { IUser } from '../../../types/user'
-import { getAvatarColor } from '../../../utils/helpers'
+import { MdDelete, MdOpenInNew } from 'react-icons/md'
+import { useResource } from '../../contexts/resource'
+import { getAvatarColor } from '../../utils/helpers'
 
-export default function User({
-  user,
-  handleUserDelete,
-  handleUserOpen
-}: {
-  user: IUser
-  handleUserDelete: (e: any, user: IUser) => void
-  handleUserOpen: (e: any, user: IUser) => void
-}) {
+export default function User() {
+  const { element, handleRemove, openInNewWindow } = useResource()
   const bgColor = useColorModeValue('gray.200', 'gray.600')
   const bgColorActive = useColorModeValue('gray.300', 'gray.500')
 
   return (
-    <Link href={`/users/edit?id=${user._id}`} style={{ height: '100%' }}>
+    <Link href={`/users/edit?id=${element._id}`} style={{ height: '100%' }}>
       <Card
         flexDirection="row"
         p={2}
@@ -39,17 +31,17 @@ export default function User({
       >
         <Box mr={2}>
           <Avatar
-            bg={getAvatarColor(user.name) + '.500'}
+            bg={getAvatarColor(element.name) + '.500'}
             size="md"
-            name={user.name}
-            src={user.photo}
+            name={element.name}
+            src={element.photo}
           />
         </Box>
 
         <Box flex="1" overflow="hidden" h="100%">
           <Box h="calc(100% - 24px)">
             <Box fontWeight="bold" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">
-              {user.name}
+              {element.name}
             </Box>
 
             <Box
@@ -59,7 +51,7 @@ export default function User({
               fontWeight="300"
               fontSize="xs"
             >
-              @{user.username}
+              @{element.username}
             </Box>
 
             <Box
@@ -69,10 +61,10 @@ export default function User({
               textOverflow="ellipsis"
               fontWeight="200"
             >
-              Permissões: {(user.permissions as string[])?.length || 0}
+              Permissões: {(element.permissions as string[])?.length || 0}
             </Box>
 
-            <Box hidden={!(user.permissions as string[])?.some((p) => p.trim() === '*')}>
+            <Box hidden={!(element.permissions as string[])?.some((p) => p.trim() === '*')}>
               <Badge>ADMINISTRADOR</Badge>
             </Box>
           </Box>
@@ -81,7 +73,7 @@ export default function User({
         <Flex flexDirection="column">
           <Tooltip label="Excluir">
             <IconButton colorScheme="red" size="xs" aria-label="Excluir" variant="ghost" mb={1}>
-              <MdDelete size="20" onClick={(e) => handleUserDelete(e, user)} />
+              <MdDelete size="20" onClick={handleRemove} />
             </IconButton>
           </Tooltip>
 
@@ -92,7 +84,7 @@ export default function User({
               aria-label="Abrir em uma janela"
               variant="ghost"
             >
-              <MdOpenInNew size="20" onClick={(e) => handleUserOpen(e, user)} />
+              <MdOpenInNew size="20" onClick={openInNewWindow} />
             </IconButton>
           </Tooltip>
         </Flex>

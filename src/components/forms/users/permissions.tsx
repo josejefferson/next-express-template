@@ -2,8 +2,8 @@ import { Box, Card, FormControl, FormLabel, IconButton, SimpleGrid } from '@chak
 import { Field, FieldProps, useFormikContext } from 'formik'
 import { MouseEvent } from 'react'
 import { MdAdd } from 'react-icons/md'
-import { AutoResizeTextarea } from '../../../../utils/auto-size-textarea'
-import { permissions } from '../../../../utils/data'
+import { AutoResizeTextarea } from '../../../utils/auto-size-textarea'
+import { permissions } from '../../../utils/permissions'
 
 function Permissions() {
   const { values, setFieldValue } = useFormikContext<any>()
