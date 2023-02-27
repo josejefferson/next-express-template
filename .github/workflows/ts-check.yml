@@ -1,12 +1,9 @@
-name: Build
+name: TypeScript Types Check
 
-on:
-  push:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
-  build:
+  typescript-types-check:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -14,20 +11,13 @@ jobs:
     steps:
       - name: Preparing GitHub Action
         uses: actions/checkout@v2
-
       - name: Preparing Node.js
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-
       - name: Installing Yarn
         run: npm install -g yarn
-
       - name: Installing dependencies
         run: yarn
-
-      - name: Building
-        run: yarn build
-
-      - name: Exporting
-        run: yarn export
+      - name: Checking TypeScript Types
+        run: tsc --noEmit
