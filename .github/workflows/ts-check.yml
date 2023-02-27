@@ -20,4 +20,4 @@ jobs:
       - name: Installing dependencies
         run: yarn
       - name: Checking TypeScript Types
-        run: tsc --noEmit
+        run: yarn check-types
