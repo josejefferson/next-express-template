@@ -16,14 +16,17 @@ import {
   useToast
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { MdDone, MdLock, MdPerson, MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import Nav from '../../components/navbar'
+import { useAuth } from '../../contexts/auth'
 import api from '../../utils/api'
 
 export default function Signup() {
   const [loggedName, setLoggedName] = useState<string>()
+  const { refresh } = useAuth()
+  useEffect(() => loggedName && refresh(), [loggedName, refresh])
 
   return (
     <>

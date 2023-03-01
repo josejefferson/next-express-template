@@ -1,3 +1,5 @@
+import { Container } from '@chakra-ui/react'
+import { PropsWithChildren } from 'react'
 import Name from '../../components/forms/users/name'
 import Password from '../../components/forms/users/password'
 import Permissions from '../../components/forms/users/permissions'
@@ -9,7 +11,13 @@ import { defaultUser } from '../../utils/defaults'
 
 export default function Add() {
   return (
-    <ResourceAdd url="/auth/users" id="users" name="Usuário" defaultData={defaultUser}>
+    <ResourceAdd
+      url="/auth/users"
+      id="users"
+      name="Usuário"
+      defaultData={defaultUser}
+      layout={Layout}
+    >
       <Name />
       <Username />
       <Photo />
@@ -17,5 +25,13 @@ export default function Add() {
       <RequirePasswordChange />
       <Permissions />
     </ResourceAdd>
+  )
+}
+
+function Layout({ children }: PropsWithChildren) {
+  return (
+    <Container maxW="8xl" p={0}>
+      {children}
+    </Container>
   )
 }

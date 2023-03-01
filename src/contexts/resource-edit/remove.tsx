@@ -19,9 +19,9 @@ export default function Remove({ deny }: { deny?: boolean }) {
     return api
       .delete(`${res?.url}/${res?.elementID}`)
       .then(() => {
-        router.replace('/users')
+        router.replace(`/${res?.name}`)
         toast({
-          title: res?.name + ' excluído com sucesso',
+          title: `${res?.name} excluíd${res?.nameFem ? 'a' : 'o'} com sucesso`,
           status: 'success',
           duration: 5000,
           isClosable: true

@@ -31,7 +31,7 @@ export interface IProps {
   valueRef?: any
   customEffect?: () => any
   CustomLoading?: () => JSX.Element
-  CustomFailed?: ({ err }: { err: any }) => JSX.Element
+  CustomFailed?: ({ err, retry }: { err: any; retry?: () => any }) => JSX.Element
 }
 
 export default function API({
@@ -57,7 +57,10 @@ export default function API({
   const fetchData = useCallback(
     (showLoading = false) => {
       if (disable) return
-      if (showLoading) setLoading(true)
+      if (showLoading) {
+        setLoading(true)
+        setError(null)
+      }
       api
         .get(url, axiosOptions || {})
         .then((value) => {
@@ -84,7 +87,12 @@ export default function API({
   if (valueRef) valueRef.current = value
 
   if (loading) children = CustomLoading ? <CustomLoading /> : <Loading />
-  if (error) children = CustomFailed ? <CustomFailed err={error} /> : <Failed err={error} />
+  if (error)
+    children = CustomFailed ? (
+      <CustomFailed err={error} retry={() => fetchData(true)} />
+    ) : (
+      <Failed err={error} retry={() => fetchData(true)} />
+    )
 
   return (
     <>

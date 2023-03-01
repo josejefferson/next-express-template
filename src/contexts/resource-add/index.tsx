@@ -1,12 +1,20 @@
 import { useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { ComponentProps, createContext, ReactNode, useContext } from 'react'
+import {
+  ComponentProps,
+  createContext,
+  FC,
+  Fragment,
+  PropsWithChildren,
+  ReactNode,
+  useContext
+} from 'react'
 import Nav from '../../components/navbar'
 import api from '../../utils/api'
 import Form from '../resource-edit/form'
 
 export interface IValue extends IProps {
-  namePronoun: string
+  nameFem: boolean
   namePlural: string
   url: string
 }
@@ -16,9 +24,10 @@ export const useResourceAdd = () => useContext(ResourceAddContext) as IValue
 
 interface IProps {
   children?: ReactNode
+  layout?: FC<PropsWithChildren>
   id: string
   name: string
-  namePronoun?: string
+  nameFem?: boolean
   namePlural?: string
   url?: string
   writePermissions?: string[]
@@ -35,9 +44,10 @@ export default function ResourceAdd(props: IProps) {
   const router = useRouter()
   let {
     children,
+    layout,
     id,
     name,
-    namePronoun,
+    nameFem,
     namePlural,
     url,
     defaultData,
@@ -48,9 +58,11 @@ export default function ResourceAdd(props: IProps) {
     beforeSubmit
   } = props
 
+  const Layout = layout ?? Fragment
+
   const value: IValue = {
     ...props,
-    namePronoun: namePronoun ?? 'o',
+    nameFem: nameFem ?? false,
     namePlural: namePlural ?? name + 's',
     url: url ?? `/${id}`
   }
@@ -64,7 +76,7 @@ export default function ResourceAdd(props: IProps) {
       .post(value.url, values)
       .then(({ data }) => {
         toast({
-          title: name + ' adicionado',
+          title: name + ' adicionad' + nameFem ? 'a' : 'o',
           status: 'success',
           duration: 5000,
           isClosable: true
@@ -90,14 +102,16 @@ export default function ResourceAdd(props: IProps) {
           <Nav title={'Adicionar ' + name.toLowerCase()} showBackButton {...navProps} />
         )}
 
-        <Form
-          data={defaultData}
-          handleSubmit={handleSubmit}
-          customButtonsStart={formButtonsStart}
-          customButtonsEnd={formButtonsEnd}
-        >
-          {children}
-        </Form>
+        <Layout>
+          <Form
+            data={defaultData}
+            handleSubmit={handleSubmit}
+            customButtonsStart={formButtonsStart}
+            customButtonsEnd={formButtonsEnd}
+          >
+            {children}
+          </Form>
+        </Layout>
       </ResourceAddContext.Provider>
     </>
   )

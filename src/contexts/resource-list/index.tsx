@@ -1,18 +1,13 @@
-import {
-  ComponentProps,
-  createContext,
-  FC,
-  Fragment,
-  PropsWithChildren,
-  ReactNode,
-  useContext
-} from 'react'
+import { ComponentProps, createContext, FC, PropsWithChildren, ReactNode, useContext } from 'react'
 import Nav from '../../components/navbar'
 import API, { IProps as IAPIProps } from '../api'
+import { useAuth } from '../auth'
+import Add from './add'
 import Resources from './resources'
+import StatusBar from './status-bar'
 
 export interface IValue extends IProps {
-  namePronoun: string
+  nameFem: boolean
   namePlural: string
   url: string
 }
@@ -25,7 +20,7 @@ interface IProps extends Omit<Omit<IAPIProps, 'url'>, 'children'> {
   layout?: FC<PropsWithChildren>
   id: string
   name: string
-  namePronoun?: string
+  nameFem?: boolean
   namePlural?: string
   url?: string
   writePermissions?: string[]
@@ -38,12 +33,11 @@ interface IProps extends Omit<Omit<IAPIProps, 'url'>, 'children'> {
 }
 
 export default function ResourceList(props: IProps) {
-  let { children, id, name, namePronoun, namePlural, url, hideNavbar, node, navProps, apiProps } =
-    props
+  let { children, id, name, nameFem, namePlural, url, hideNavbar, node, navProps, apiProps } = props
 
   const value: IValue = {
     ...props,
-    namePronoun: namePronoun ?? 'o',
+    nameFem: nameFem ?? false,
     namePlural: namePlural ?? name + 's',
     url: url ?? `/${id}`
   }
@@ -53,10 +47,23 @@ export default function ResourceList(props: IProps) {
       <ResourceListContext.Provider value={value}>
         {!hideNavbar && <Nav title={value.namePlural} {...navProps} />}
 
-        <API {...apiProps} url={value.url}>
+        <API {...apiProps} url={value.url} after={<Bottom />}>
           {children ?? <Resources node={node} />}
         </API>
       </ResourceListContext.Provider>
+    </>
+  )
+}
+
+function Bottom() {
+  const auth = useAuth()
+  const { hideStatusbar, hideAddButton, writePermissions } = useResourceList()
+  return (
+    <>
+      {!hideStatusbar && <StatusBar />}
+      {!hideAddButton && (
+        <Add deny={writePermissions && auth?.user && !auth?.hasPermission(writePermissions)} />
+      )}
     </>
   )
 }

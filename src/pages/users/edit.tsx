@@ -1,4 +1,6 @@
+import { Container } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { PropsWithChildren } from 'react'
 import Name from '../../components/forms/users/name'
 import Password from '../../components/forms/users/password'
 import Permissions from '../../components/forms/users/permissions'
@@ -18,6 +20,7 @@ export default function Edit() {
       url="/auth/users"
       elementID={id as string}
       writePermissions={['*.users']}
+      layout={Layout}
       apiProps={{
         axiosThen: ({ data }) => {
           data.permissions = data.permissions?.join?.('\n') || data.permissions
@@ -38,5 +41,13 @@ export default function Edit() {
       <RequirePasswordChange />
       <Permissions />
     </ResourceEdit>
+  )
+}
+
+function Layout({ children }: PropsWithChildren) {
+  return (
+    <Container maxW="8xl" p={0}>
+      {children}
+    </Container>
   )
 }

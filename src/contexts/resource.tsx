@@ -15,7 +15,7 @@ export interface IValue {
 interface IProps {
   children: ReactNode
   name: string
-  pronoun: string
+  nameFem: boolean
   id: string
   url: string
   element: any
@@ -28,7 +28,7 @@ export const useResource = () => useContext(ResourceContext) as IValue
 export default function Resource({
   children,
   name,
-  pronoun,
+  nameFem,
   id: resourceID,
   url,
   element,
@@ -49,7 +49,8 @@ export default function Resource({
   const handleRemove = (e: any) => {
     e.preventDefault()
     e.stopPropagation()
-    if (!confirm(`Tem certeza que deseja apagar ${pronoun} ${name.toLowerCase()}?`)) return
+    if (!confirm(`Tem certeza que deseja apagar ${nameFem ? 'a' : 'o'} ${name.toLowerCase()}?`))
+      return
     const toastId = toast({
       title: `Excluindo ${name.toLowerCase()}...`,
       status: 'loading',
@@ -59,7 +60,7 @@ export default function Resource({
     remove()
       .then(() => {
         toast.update(toastId, {
-          title: 'Usuário excluído com sucesso',
+          title: `${name} excluíd${nameFem ? 'a' : 'o'} com sucesso`,
           status: 'success',
           duration: 5000,
           isClosable: true

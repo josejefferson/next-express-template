@@ -1,12 +1,20 @@
 import { useToast } from '@chakra-ui/react'
-import { ComponentProps, createContext, ReactNode, useContext } from 'react'
+import {
+  ComponentProps,
+  createContext,
+  FC,
+  Fragment,
+  PropsWithChildren,
+  ReactNode,
+  useContext
+} from 'react'
 import Nav from '../../components/navbar'
 import api from '../../utils/api'
 import API, { IProps as IAPIProps } from '../api'
 import Form from '../resource-edit/form'
 
 export interface IValue extends IProps {
-  namePronoun: string
+  nameFem: boolean
   namePlural: string
   url: string
 }
@@ -16,11 +24,13 @@ export const useResourceEdit = () => useContext(ResourceEditContext) as IValue
 
 interface IProps {
   children?: ReactNode
+  layout?: FC<PropsWithChildren>
   id: string
   elementID: string
   name: string
   namePlural?: string
-  namePronoun?: string
+  nameFem?: boolean
+  nameProp?: string
   url?: string
   writePermissions?: string[]
   hideNavbar?: boolean
@@ -35,11 +45,12 @@ export default function ResourceEdit(props: IProps) {
   const toast = useToast()
   let {
     children,
+    layout,
     id,
     elementID,
     name,
     namePlural,
-    namePronoun,
+    nameFem,
     url,
     hideNavbar,
     formButtonsStart,
@@ -49,11 +60,13 @@ export default function ResourceEdit(props: IProps) {
     beforeSubmit
   } = props
 
+  const Layout = layout ?? Fragment
+
   const value: IValue = {
     ...props,
-    namePronoun: namePronoun ?? 'o',
+    nameFem: nameFem ?? false,
     namePlural: namePlural ?? name + 's',
-    url: url ?? `/${id}`
+    url: url || `/${id}`
   }
 
   // Envia os dados
@@ -67,21 +80,19 @@ export default function ResourceEdit(props: IProps) {
       .put(`${value.url}/${elementID}`, values)
       .then(({ data }) => {
         if (data === null) {
-          toast({
-            title: 'Erro ao salvar ' + name.toLowerCase(),
-            description: `${value.namePronoun.toUpperCase()} ${name.toLowerCase()} não existe ou foi excluíd${value.namePronoun.toLowerCase()}`,
-            status: 'error',
-            duration: 5000,
-            isClosable: true
-          })
-        } else {
-          toast({
-            title: name + ' salvo',
-            status: 'success',
-            duration: 5000,
-            isClosable: true
-          })
+          throw new Error(
+            `${value.nameFem ? 'A' : 'O'} ${name.toLowerCase()} não existe ou foi excluíd${
+              value.nameFem ? 'a' : 'o'
+            }`
+          )
         }
+
+        toast({
+          title: name + ' salvo',
+          status: 'success',
+          duration: 5000,
+          isClosable: true
+        })
       })
       .catch((err) => {
         setSubmitting(false)
@@ -100,15 +111,17 @@ export default function ResourceEdit(props: IProps) {
       <ResourceEditContext.Provider value={value}>
         {!hideNavbar && <Nav title={'Editar ' + name.toLowerCase()} showBackButton {...navProps} />}
 
-        <API {...apiProps} url={`${url}/${elementID}`} disable={!elementID}>
-          <Form
-            handleSubmit={handleSubmit}
-            customButtonsStart={formButtonsStart}
-            customButtonsEnd={formButtonsEnd}
-          >
-            {children}
-          </Form>
-        </API>
+        <Layout>
+          <API {...apiProps} url={`${value.url}/${elementID}`} disable={!elementID}>
+            <Form
+              handleSubmit={handleSubmit}
+              customButtonsStart={formButtonsStart}
+              customButtonsEnd={formButtonsEnd}
+            >
+              {children}
+            </Form>
+          </API>
+        </Layout>
       </ResourceEditContext.Provider>
     </>
   )
