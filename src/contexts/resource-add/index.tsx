@@ -76,7 +76,7 @@ export default function ResourceAdd(props: IProps) {
       .post(value.url, values)
       .then(({ data }) => {
         toast({
-          title: name + ' adicionad' + nameFem ? 'a' : 'o',
+          title: name + ' adicionad' + (nameFem ? 'a' : 'o'),
           status: 'success',
           duration: 5000,
           isClosable: true

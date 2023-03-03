@@ -19,7 +19,7 @@ export default function Remove({ deny }: { deny?: boolean }) {
     return api
       .delete(`${res?.url}/${res?.elementID}`)
       .then(() => {
-        router.replace(`/${res?.name}`)
+        router.replace(`/${res?.id}`)
         toast({
           title: `${res?.name} excluíd${res?.nameFem ? 'a' : 'o'} com sucesso`,
           status: 'success',

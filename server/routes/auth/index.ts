@@ -4,7 +4,7 @@ import changePasswordCtrl from './change-password-ctrl'
 import loginCtrl from './login-ctrl'
 import { meCtrl } from './me-ctrl'
 import { permissionsCtrl } from './permissions'
-import userRoutes from './users'
+import userRoutes from '../users'
 const router = express.Router()
 export default router
 

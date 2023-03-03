@@ -7,7 +7,7 @@ function Photo() {
     <FormControl mt={2}>
       <FormLabel mb={1}>URL da foto</FormLabel>
       <FastField name="photo">
-        {({ field }: FieldProps) => <Input maxLength={80} {...fp(field)} />}
+        {({ field }: FieldProps) => <Input {...fp(field)} />}
       </FastField>
     </FormControl>
   )

@@ -23,6 +23,8 @@ export interface IProps {
   after?: ReactNode
   url: string
   disable?: boolean
+  disableLoadingChild?: boolean
+  disableErrorChild?: boolean
   disableLoginRedirect?: boolean
   refreshEmitter?: any
   axiosOptions?: any
@@ -40,6 +42,8 @@ export default function API({
   after,
   url,
   disable,
+  disableLoadingChild,
+  disableErrorChild,
   disableLoginRedirect,
   refreshEmitter,
   axiosOptions,
@@ -72,7 +76,7 @@ export default function API({
         .catch((err) => {
           axiosCatch?.(err)
           if (err?.response?.status === 401 && !disableLoginRedirect) router.replace(getLoginURL())
-          console.error('err', err)
+          console.error(err)
           setError(err)
         })
         .finally(() => setLoading(false))
@@ -86,8 +90,8 @@ export default function API({
   const value = { loading, error, data, refresh: fetchData, setData }
   if (valueRef) valueRef.current = value
 
-  if (loading) children = CustomLoading ? <CustomLoading /> : <Loading />
-  if (error)
+  if (!disableLoadingChild && loading) children = CustomLoading ? <CustomLoading /> : <Loading />
+  if (!disableErrorChild && error)
     children = CustomFailed ? (
       <CustomFailed err={error} retry={() => fetchData(true)} />
     ) : (

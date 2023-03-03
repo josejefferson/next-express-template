@@ -10,7 +10,7 @@
     "format": "prettier -w .",
     "check-types": "tsc --noEmit && tsc --project tsconfig.server.json --noEmit",
     "start:next": "next start",
-    "dev:next": "next:dev",
+    "dev:next": "next dev",
     "build:next": "next build",
     "lint": "next lint",
     "export": "next export"

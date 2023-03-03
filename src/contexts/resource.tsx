@@ -7,6 +7,7 @@ import { IValue as IAPIValue } from './api'
 export interface IValue {
   id: string
   element: any
+  baseURL: string
   openInNewWindow: (e: any) => any
   remove: (id: string) => ReturnType<Axios['delete']>
   handleRemove: (e: any) => any
@@ -83,7 +84,8 @@ export default function Resource({
     element,
     openInNewWindow,
     remove,
-    handleRemove
+    handleRemove,
+    baseURL: url
   }
 
   return <ResourceContext.Provider value={value}>{children}</ResourceContext.Provider>
