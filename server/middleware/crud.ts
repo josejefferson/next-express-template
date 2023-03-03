@@ -1,6 +1,7 @@
 import { badRequest } from '@hapi/boom'
 import { NextFunction, Request, Response } from 'express'
 import type { Model } from 'mongoose'
+import { ObjectSchema } from 'yup'
 
 // Retorna todos as entidades
 export function readAll<T = any>(Model: Model<T>) {
@@ -82,4 +83,17 @@ export function updatedBy(req: Request, res: Response, next: NextFunction) {
     req.body.updatedBy = req.user?.id
   }
   next()
+}
+
+// Valida a requisição
+export function validate(schema: ObjectSchema<any>) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    try {
+      schema.validateSync(req.body)
+      req.body = schema.cast(req.body, { stripUnknown: true })
+      next()
+    } catch (err: any) {
+      throw badRequest('Dados inválidos: ' + err.message)
+    }
+  }
 }

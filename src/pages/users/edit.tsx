@@ -17,7 +17,6 @@ export default function Edit() {
     <ResourceEdit
       id="users"
       name="Usuário"
-      url="/auth/users"
       elementID={id as string}
       writePermissions={['*.users']}
       layout={Layout}

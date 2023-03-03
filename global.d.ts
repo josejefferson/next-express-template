@@ -7,6 +7,7 @@ declare global {
         id: string
         username: string
       }
+      payload: any
     }
 
     interface Response {

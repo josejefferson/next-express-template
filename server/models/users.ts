@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import mongoose, { Document, Schema, Types } from 'mongoose'
 import log from '../helpers/log'
-import { can } from '../routes/auth/permissions'
+import { can } from '../helpers/permissions'
 
 export interface IUser extends Document {
   name: string
@@ -41,6 +41,14 @@ schema.pre('save', async function save(next) {
   } catch (err: any) {
     return next(err)
   }
+})
+
+schema.pre('findOneAndUpdate', async function save(next) {
+  const update: any = this.getUpdate()
+  if (update?.$set?.password) {
+    update.$set.password = bcrypt.hashSync(update.$set.password, 10)
+  }
+  next()
 })
 
 schema.methods.validatePassword = async function (data: string) {

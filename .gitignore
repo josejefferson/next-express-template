@@ -2,6 +2,7 @@
 
 .env
 /dist/
+__test__
 
 # dependencies
 /node_modules

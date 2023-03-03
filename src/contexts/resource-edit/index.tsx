@@ -88,7 +88,7 @@ export default function ResourceEdit(props: IProps) {
         }
 
         toast({
-          title: name + ' salvo',
+          title: name + ' salv' + (value.nameFem ? 'a' : 'o'),
           status: 'success',
           duration: 5000,
           isClosable: true

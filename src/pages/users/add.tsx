@@ -12,11 +12,17 @@ import { defaultUser } from '../../utils/defaults'
 export default function Add() {
   return (
     <ResourceAdd
-      url="/auth/users"
       id="users"
       name="Usuário"
       defaultData={defaultUser}
       layout={Layout}
+      beforeSubmit={(values) => {
+        const { confirmPassword, ...newValues } = values
+        values = newValues
+        if (values.password !== confirmPassword) return alert('As senhas não se coincidem')
+        values.permissions = values.permissions?.split?.('\n') || values.permissions
+        return values
+      }}
     >
       <Name />
       <Username />

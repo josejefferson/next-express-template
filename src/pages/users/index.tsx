@@ -9,7 +9,6 @@ export default function List() {
       id="users"
       name="Usuário"
       writePermissions={['*.users']}
-      url="/auth/users"
       layout={Layout}
       node={<User />}
     />

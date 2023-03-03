@@ -16,7 +16,7 @@ import {
   useToast
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { MdDone, MdLock, MdPerson, MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import Nav from '../../components/navbar'
@@ -25,8 +25,6 @@ import api from '../../utils/api'
 
 export default function Signup() {
   const [loggedName, setLoggedName] = useState<string>()
-  const { refresh } = useAuth()
-  useEffect(() => loggedName && refresh(), [loggedName, refresh])
 
   return (
     <>
@@ -84,6 +82,7 @@ export default function Signup() {
 const LoginForm = ({ setLoggedName }: any) => {
   const toast = useToast()
   const router = useRouter()
+  const { refresh } = useAuth()
   const [cookie, setCookie] = useCookies(['authorization'])
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -105,6 +104,7 @@ const LoginForm = ({ setLoggedName }: any) => {
           expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
           path: '/'
         })
+        setTimeout(refresh, 1000)
         setLoggedName(data.name || 'Usuário')
         setTimeout(() => router.replace((router.query.continue as string) || '/'), 1000)
       })
