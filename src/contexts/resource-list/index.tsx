@@ -15,8 +15,9 @@ export interface IValue extends IProps {
 export const ResourceListContext = createContext<IValue>(null as any)
 export const useResourceList = () => useContext(ResourceListContext) as IValue
 
-interface IProps extends Omit<Omit<IAPIProps, 'url'>, 'children'> {
+interface IProps {
   children?: ReactNode
+  outLayout?: FC<PropsWithChildren>
   layout?: FC<PropsWithChildren>
   id: string
   name: string
@@ -33,7 +34,19 @@ interface IProps extends Omit<Omit<IAPIProps, 'url'>, 'children'> {
 }
 
 export default function ResourceList(props: IProps) {
-  let { children, id, name, nameFem, namePlural, url, hideNavbar, node, navProps, apiProps } = props
+  let {
+    children,
+    outLayout,
+    id,
+    name,
+    nameFem,
+    namePlural,
+    url,
+    hideNavbar,
+    node,
+    navProps,
+    apiProps
+  } = props
 
   const value: IValue = {
     ...props,
@@ -47,7 +60,7 @@ export default function ResourceList(props: IProps) {
       <ResourceListContext.Provider value={value}>
         {!hideNavbar && <Nav title={value.namePlural} {...navProps} />}
 
-        <API {...apiProps} url={value.url} after={<Bottom />}>
+        <API {...apiProps} url={value.url} after={<Bottom />} layout={outLayout}>
           {children ?? <Resources node={node} />}
         </API>
       </ResourceListContext.Provider>

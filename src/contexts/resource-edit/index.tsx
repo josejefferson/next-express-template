@@ -13,7 +13,7 @@ import api from '../../utils/api'
 import API, { IProps as IAPIProps } from '../api'
 import Form from '../resource-edit/form'
 
-export interface IValue extends IProps {
+export interface IValue extends IResourceEditProps {
   nameFem: boolean
   namePlural: string
   url: string
@@ -22,7 +22,7 @@ export interface IValue extends IProps {
 export const ResourceEditContext = createContext<IValue>(null as any)
 export const useResourceEdit = () => useContext(ResourceEditContext) as IValue
 
-interface IProps {
+export interface IResourceEditProps {
   children?: ReactNode
   layout?: FC<PropsWithChildren>
   id: string
@@ -34,6 +34,8 @@ interface IProps {
   url?: string
   writePermissions?: string[]
   hideNavbar?: boolean
+  onSave?: (data: any) => any
+  onRemove?: (data: any) => any
   formButtonsStart?: ReactNode
   formButtonsEnd?: ReactNode
   navProps?: ComponentProps<typeof Nav>
@@ -41,7 +43,7 @@ interface IProps {
   beforeSubmit?: (values: any) => false | any
 }
 
-export default function ResourceEdit(props: IProps) {
+export default function ResourceEdit(props: IResourceEditProps) {
   const toast = useToast()
   let {
     children,
@@ -53,6 +55,7 @@ export default function ResourceEdit(props: IProps) {
     nameFem,
     url,
     hideNavbar,
+    onSave,
     formButtonsStart,
     formButtonsEnd,
     navProps,
@@ -93,6 +96,8 @@ export default function ResourceEdit(props: IProps) {
           duration: 5000,
           isClosable: true
         })
+
+        if (onSave) return onSave(data)
       })
       .catch((err) => {
         setSubmitting(false)

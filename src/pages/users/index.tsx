@@ -2,6 +2,7 @@ import { Box, Container, SimpleGrid } from '@chakra-ui/react'
 import { PropsWithChildren } from 'react'
 import User from '../../components/resources/user'
 import ResourceList from '../../contexts/resource-list'
+import { resourceListSort } from '../../utils/helpers'
 
 export default function List() {
   return (
@@ -11,6 +12,7 @@ export default function List() {
       writePermissions={['*.users']}
       layout={Layout}
       node={<User />}
+      {...resourceListSort()}
     />
   )
 }

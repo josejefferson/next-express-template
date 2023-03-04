@@ -10,7 +10,7 @@ function Username() {
         {({ field }: FieldProps) => (
           <InputGroup>
             <InputLeftAddon children="@" />
-            <Input maxLength={80} {...fp(field)} />
+            <Input {...fp(field)} />
           </InputGroup>
         )}
       </FastField>

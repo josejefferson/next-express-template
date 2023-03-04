@@ -18,14 +18,15 @@ export default function Remove({ deny }: { deny?: boolean }) {
     setLoading(true)
     return api
       .delete(`${res?.url}/${res?.elementID}`)
-      .then(() => {
-        router.replace(`/${res?.id}`)
+      .then(({ data }) => {
         toast({
           title: `${res?.name} excluíd${res?.nameFem ? 'a' : 'o'} com sucesso`,
           status: 'success',
           duration: 5000,
           isClosable: true
         })
+        if (res.onRemove) return res.onRemove(data)
+        router.replace(`/${res?.id}`)
       })
       .catch((err) => {
         setLoading(false)

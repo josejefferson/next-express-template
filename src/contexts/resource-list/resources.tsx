@@ -47,12 +47,13 @@ const Resources = withErrorBoundary(
 
 export default Resources
 
-function FallbackComponent({ error }: FallbackProps) {
+function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
   return (
     <Failed
       title="Ocorreu um erro ao renderizar isto"
       err={error}
       footer="Contate o administrador se o problema persistir"
+      retry={resetErrorBoundary}
     />
   )
 }

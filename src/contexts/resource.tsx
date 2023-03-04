@@ -47,11 +47,15 @@ export default function Resource({
     return api.delete(`${url}/${element._id}`)
   }
 
-  const handleRemove = (e: any) => {
+  const handleRemove = (e: any, confirmation = true) => {
     e.preventDefault()
     e.stopPropagation()
-    if (!confirm(`Tem certeza que deseja apagar ${nameFem ? 'a' : 'o'} ${name.toLowerCase()}?`))
+    if (
+      confirmation &&
+      !confirm(`Tem certeza que deseja apagar ${nameFem ? 'a' : 'o'} ${name.toLowerCase()}?`)
+    ) {
       return
+    }
     const toastId = toast({
       title: `Excluindo ${name.toLowerCase()}...`,
       status: 'loading',

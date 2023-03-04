@@ -1,6 +1,16 @@
 import { AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
-import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  FC,
+  Fragment,
+  PropsWithChildren,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 import Failed from '../components/common/failed'
 import Loading from '../components/common/loading'
 import api from '../utils/api'
@@ -21,6 +31,7 @@ export interface IProps {
   children: ReactNode
   before?: ReactNode
   after?: ReactNode
+  layout?: FC<PropsWithChildren>
   url: string
   disable?: boolean
   disableLoadingChild?: boolean
@@ -40,6 +51,7 @@ export default function API({
   children,
   before,
   after,
+  layout,
   url,
   disable,
   disableLoadingChild,
@@ -57,6 +69,7 @@ export default function API({
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<any>(null)
   const router = useRouter()
+  const Layout = layout ?? Fragment
 
   const fetchData = useCallback(
     (showLoading = false) => {
@@ -101,9 +114,11 @@ export default function API({
   return (
     <>
       <APIContext.Provider value={value}>
-        {before}
-        {children}
-        {after}
+        <Layout>
+          {before}
+          {children}
+          {after}
+        </Layout>
       </APIContext.Provider>
     </>
   )

@@ -1,3 +1,6 @@
+import seedrandom from 'seedrandom'
+import { IProps as IAPIProps } from '../contexts/api'
+
 export function getCookie(name: string) {
   const value = `; ${document.cookie}`
   const parts = value.split(`; ${name}=`)
@@ -22,6 +25,17 @@ export function getLoginURL() {
 const COLORS = ['pink', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'cyan', 'purple']
 export function getAvatarColor(name?: string) {
   if (!name || !name.trim()) return 'teal'
-  const i = name.trim().toLowerCase().charCodeAt(0) % COLORS.length
-  return COLORS[i]
+  const mathRandom = seedrandom(name)
+  const color = COLORS[Math.floor(mathRandom() * COLORS.length)]
+  return color
+}
+
+export function resourceListSort(field = 'name'): { apiProps: Partial<IAPIProps> } {
+  return {
+    apiProps: {
+      axiosThen: ({ data }) => {
+        return data?.sort?.((a: any, b: any) => a?.[field]?.localeCompare?.(b?.[field]))
+      }
+    }
+  }
 }

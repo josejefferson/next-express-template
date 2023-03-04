@@ -13,7 +13,7 @@ import Nav from '../../components/navbar'
 import api from '../../utils/api'
 import Form from '../resource-edit/form'
 
-export interface IValue extends IProps {
+export interface IValue extends IResourceAddProps {
   nameFem: boolean
   namePlural: string
   url: string
@@ -22,7 +22,7 @@ export interface IValue extends IProps {
 export const ResourceAddContext = createContext<IValue>(null as any)
 export const useResourceAdd = () => useContext(ResourceAddContext) as IValue
 
-interface IProps {
+export interface IResourceAddProps {
   children?: ReactNode
   layout?: FC<PropsWithChildren>
   id: string
@@ -32,6 +32,7 @@ interface IProps {
   url?: string
   writePermissions?: string[]
   defaultData: any
+  onSave?: (data: any) => any
   hideNavbar?: boolean
   formButtonsStart?: ReactNode
   formButtonsEnd?: ReactNode
@@ -39,7 +40,7 @@ interface IProps {
   beforeSubmit?: (values: any) => false | any
 }
 
-export default function ResourceAdd(props: IProps) {
+export default function ResourceAdd(props: IResourceAddProps) {
   const toast = useToast()
   const router = useRouter()
   let {
@@ -51,6 +52,7 @@ export default function ResourceAdd(props: IProps) {
     namePlural,
     url,
     defaultData,
+    onSave,
     hideNavbar,
     formButtonsStart,
     formButtonsEnd,
@@ -81,6 +83,7 @@ export default function ResourceAdd(props: IProps) {
           duration: 5000,
           isClosable: true
         })
+        if (onSave) return onSave(data)
         router.replace(`/${id}/edit/?id=${data._id}`)
       })
       .catch((err) => {
