@@ -3,6 +3,7 @@ import { Axios } from 'axios'
 import { createContext, ReactNode, useContext } from 'react'
 import api from '../utils/api'
 import { IValue as IAPIValue } from './api'
+import { useConfirmModal } from './confirm-modal'
 
 export interface IValue {
   id: string
@@ -36,6 +37,7 @@ export default function Resource({
   apiContext
 }: IProps) {
   const toast = useToast()
+  const confirmDialog = useConfirmModal()
 
   const openInNewWindow = (e: any) => {
     e.preventDefault()
@@ -47,15 +49,17 @@ export default function Resource({
     return api.delete(`${url}/${element._id}`)
   }
 
-  const handleRemove = (e: any, confirmation = true) => {
+  const handleRemove = async (e: any, confirmation = true) => {
     e.preventDefault()
     e.stopPropagation()
-    if (
-      confirmation &&
-      !confirm(`Tem certeza que deseja apagar ${nameFem ? 'a' : 'o'} ${name.toLowerCase()}?`)
-    ) {
-      return
+    if (confirmation) {
+      const confirmed = await confirmDialog({
+        title: 'Excluir ' + name.toLowerCase(),
+        body: `Tem certeza que deseja excluir ${nameFem ? 'a' : 'o'} ${name.toLowerCase()}?`
+      })
+      if (!confirmed) return
     }
+
     const toastId = toast({
       title: `Excluindo ${name.toLowerCase()}...`,
       status: 'loading',

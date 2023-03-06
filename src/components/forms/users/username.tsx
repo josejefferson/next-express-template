@@ -10,7 +10,7 @@ function Username() {
         {({ field }: FieldProps) => (
           <InputGroup>
             <InputLeftAddon children="@" />
-            <Input {...fp(field)} />
+            <Input autoComplete="off" {...fp(field)} />
           </InputGroup>
         )}
       </FastField>

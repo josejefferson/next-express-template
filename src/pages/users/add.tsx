@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/react'
+import { Container, useToast } from '@chakra-ui/react'
 import { PropsWithChildren } from 'react'
 import Name from '../../components/forms/users/name'
 import Password from '../../components/forms/users/password'
@@ -10,6 +10,8 @@ import ResourceAdd from '../../contexts/resource-add'
 import { defaultUser } from '../../utils/defaults'
 
 export default function Add() {
+  const toast = useToast()
+
   return (
     <ResourceAdd
       id="users"
@@ -19,7 +21,10 @@ export default function Add() {
       beforeSubmit={(values) => {
         const { confirmPassword, ...newValues } = values
         values = newValues
-        if (values.password !== confirmPassword) return alert('As senhas não se coincidem')
+        if (values.password !== confirmPassword) {
+          toast({ description: 'As senhas não se coincidem', status: 'error' })
+          return
+        }
         values.permissions = values.permissions?.split?.('\n') || values.permissions
         return values
       }}

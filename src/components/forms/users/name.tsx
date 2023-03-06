@@ -7,7 +7,7 @@ function Name() {
     <FormControl mt={2} isRequired>
       <FormLabel mb={1}>Nome</FormLabel>
       <FastField name="name">
-        {({ field }: FieldProps) => <Input autoFocus {...fp(field)} />}
+        {({ field }: FieldProps) => <Input autoFocus autoComplete="off" {...fp(field)} />}
       </FastField>
     </FormControl>
   )

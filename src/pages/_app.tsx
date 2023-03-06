@@ -13,6 +13,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { IconContext } from 'react-icons'
 import CriticalError from '../components/common/critical-error'
 import AuthProvider from '../contexts/auth'
+import ConfirmModalProvider from '../contexts/confirm-modal'
 import '../styles/globals.css'
 import { theme } from '../utils/theme'
 
@@ -33,9 +34,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <CookiesProvider>
           <ChakraProvider theme={theme}>
             <HeadersProvider>
-              <AuthProvider>
-                <Component {...pageProps} />
-              </AuthProvider>
+              <ConfirmModalProvider>
+                <AuthProvider>
+                  <Component {...pageProps} />
+                </AuthProvider>
+              </ConfirmModalProvider>
             </HeadersProvider>
           </ChakraProvider>
         </CookiesProvider>
