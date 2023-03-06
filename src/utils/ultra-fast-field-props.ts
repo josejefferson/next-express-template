@@ -20,6 +20,11 @@ export default function fp(field: FieldInputProps<any>) {
     onBlur: (e: any) => {
       if (e.target.value === field.value) return
       field.onChange(e)
+    },
+    onKeyDown: (e: any) => {
+      if (e.key === 'Enter' && e.target?.tagName !== 'TEXTAREA') {
+        field.onChange(e)
+      }
     }
   }
 }

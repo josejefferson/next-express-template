@@ -1,18 +1,19 @@
 import { notFound } from '@hapi/boom'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import express, { Router } from 'express'
+import express from 'express'
 import 'express-async-errors'
-import env from './env'
+import next from 'next'
+import log from '../helpers/log'
 import error from '../middleware/error'
 import redirectHttps from '../middleware/redirect-https'
-import next from 'next'
 import routes from '../routes'
-import log from '../helpers/log'
+import env from './env'
 
 const dev = env.environment === 'development'
 const nextApp = next({ dev })
 const nextHandle = nextApp.getRequestHandler()
+nextApp.prepare().catch(console.error)
 
 const app = express()
 
@@ -39,11 +40,8 @@ app.all('*', () => {
 })
 app.use(error)
 
-nextApp.prepare().then(setupExpressApp).catch(console.error)
-function setupExpressApp() {
-  app.listen(env.port, () => {
-    log('INFO', undefined, 'Servidor HTTP iniciado na porta ' + env.port)
-  })
-}
+app.listen(env.port, () => {
+  log('INFO', undefined, 'Servidor HTTP iniciado na porta ' + env.port)
+})
 
 export default routes

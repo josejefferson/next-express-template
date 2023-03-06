@@ -26,8 +26,8 @@ const Form = withErrorBoundary(
     if (!data) data = api?.data
 
     const handleKeyPress = (e: KeyboardEvent<HTMLFormElement>) => {
-      if ((e.target as any)?.tagName === 'TEXTAREA') return
-      if (e.key === 'Enter') e.preventDefault()
+      // if ((e.target as any)?.tagName === 'TEXTAREA') return
+      // if (e.key === 'Enter') e.preventDefault()
     }
 
     return (

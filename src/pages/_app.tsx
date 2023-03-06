@@ -1,12 +1,13 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, useColorModeValue } from '@chakra-ui/react'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 import Router from 'next/router'
 import NProgress from 'nprogress'
-import { useEffect } from 'react'
+import { PropsWithChildren, useEffect } from 'react'
 import { CookiesProvider } from 'react-cookie'
 import { ErrorBoundary } from 'react-error-boundary'
 import { IconContext } from 'react-icons'
@@ -31,12 +32,29 @@ export default function App({ Component, pageProps }: AppProps) {
       <IconContext.Provider value={{ size: '24' }}>
         <CookiesProvider>
           <ChakraProvider theme={theme}>
-            <AuthProvider>
-              <Component {...pageProps} />
-            </AuthProvider>
+            <HeadersProvider>
+              <AuthProvider>
+                <Component {...pageProps} />
+              </AuthProvider>
+            </HeadersProvider>
           </ChakraProvider>
         </CookiesProvider>
       </IconContext.Provider>
     </ErrorBoundary>
+  )
+}
+
+function HeadersProvider({ children }: PropsWithChildren) {
+  return (
+    <>
+      <Head>
+        <meta name="theme-color" content={useColorModeValue('#EDF2F7', '#171923')} />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content"
+        />
+      </Head>
+      {children}
+    </>
   )
 }

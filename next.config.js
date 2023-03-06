@@ -2,7 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  publicRuntimeConfig: {
+    apiEndpoint: process.env.API_ENDPOINT
+  },
   trailingSlash: true
 }
 
-module.exports = nextConfig
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development'
+})
+
+module.exports = withPWA(nextConfig)
