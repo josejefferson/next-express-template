@@ -1,9 +1,9 @@
+import type { InputProps } from '@chakra-ui/react'
 import {
   IconButton,
   Input,
   InputGroup,
   InputLeftElement,
-  InputProps,
   InputRightElement
 } from '@chakra-ui/react'
 import { useState } from 'react'

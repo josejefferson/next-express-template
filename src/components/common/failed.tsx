@@ -1,5 +1,5 @@
 import { Box, Button, Heading, useColorModeValue } from '@chakra-ui/react'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { MdClose } from 'react-icons/md'
 
 interface IProps {

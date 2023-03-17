@@ -1,4 +1,5 @@
-import { createContext, PropsWithChildren, useContext, useState } from 'react'
+import type { PropsWithChildren } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 export interface IValue {
   title: string | undefined

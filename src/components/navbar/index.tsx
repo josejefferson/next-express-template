@@ -1,5 +1,5 @@
 import { Box, Container, Flex, IconButton, Stack, useColorModeValue } from '@chakra-ui/react'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { MdArrowBack } from 'react-icons/md'
 import KeyboardShortcuts from '../common/keyboard-shortcuts'
 import ColorMode from './color-mode'

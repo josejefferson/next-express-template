@@ -15,7 +15,7 @@ import {
 import Link from 'next/link'
 import { useRef } from 'react'
 import { MdClose, MdHome, MdMenu, MdPerson } from 'react-icons/md'
-import { IMenu } from '../../types/menu'
+import type { IMenu } from '../../types/menu'
 
 export const MENU: IMenu[] = [
   { name: 'Início', url: '/', icon: MdHome },

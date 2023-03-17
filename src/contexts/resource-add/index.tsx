@@ -1,14 +1,7 @@
 import { useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import {
-  ComponentProps,
-  createContext,
-  FC,
-  Fragment,
-  PropsWithChildren,
-  ReactNode,
-  useContext
-} from 'react'
+import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react'
+import { createContext, Fragment, useContext } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import Nav from '../../components/navbar'
 import api from '../../utils/api'

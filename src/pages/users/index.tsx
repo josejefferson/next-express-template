@@ -1,5 +1,5 @@
 import { Box, Container, SimpleGrid } from '@chakra-ui/react'
-import { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react'
 import User from '../../components/resources/user'
 import ResourceList from '../../contexts/resource-list'
 import { resourceListSort } from '../../utils/helpers'

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { FallbackProps } from 'react-error-boundary'
+import type { FallbackProps } from 'react-error-boundary'
 
 export default function CriticalError({ error }: FallbackProps) {
   return (

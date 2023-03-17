@@ -1,5 +1,7 @@
-import { Fragment, ReactNode } from 'react'
-import { FallbackProps, withErrorBoundary } from 'react-error-boundary'
+import type { ReactNode } from 'react'
+import { Fragment } from 'react'
+import type { FallbackProps } from 'react-error-boundary'
+import { withErrorBoundary } from 'react-error-boundary'
 import { useResourceList } from '.'
 import Failed from '../../components/common/failed'
 import { useAPI } from '../api'
@@ -13,7 +15,8 @@ const Resources = withErrorBoundary(
     const apiContext = useAPI()
     const auth = useAuth()
     const { data } = apiContext
-    const { name, nameFem, id, url, removeURL, writePermissions, hideAddButton, layout } = useResourceList()
+    const { name, nameFem, id, url, removeURL, writePermissions, hideAddButton, layout } =
+      useResourceList()
     const Layout = layout ?? Fragment
 
     return (

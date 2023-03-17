@@ -1,4 +1,5 @@
-import { Button, ButtonProps, Tooltip } from '@chakra-ui/react'
+import type { ButtonProps } from '@chakra-ui/react'
+import { Button, Tooltip } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useHotkeys } from 'react-hotkeys-hook'

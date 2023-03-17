@@ -1,4 +1,4 @@
-import { FieldInputProps } from 'formik'
+import type { FieldInputProps } from 'formik'
 
 /**
  * Melhora o desempenho das Inputs de texto do Formik

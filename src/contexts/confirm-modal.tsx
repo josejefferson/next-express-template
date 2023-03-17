@@ -9,7 +9,8 @@ import {
   ModalOverlay
 } from '@chakra-ui/react'
 import { Router } from 'next/router'
-import { createContext, PropsWithChildren, ReactNode, useContext, useRef, useState } from 'react'
+import type { PropsWithChildren, ReactNode } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 type IValue = (params: string | IConfirmDialogParams) => Promise<boolean>

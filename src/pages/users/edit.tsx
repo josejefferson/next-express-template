@@ -1,6 +1,6 @@
 import { Container, useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react'
 import Name from '../../components/forms/users/name'
 import Password from '../../components/forms/users/password'
 import Permissions from '../../components/forms/users/permissions'

@@ -1,5 +1,5 @@
 import seedrandom from 'seedrandom'
-import { IProps as IAPIProps } from '../contexts/api'
+import type { IProps as IAPIProps } from '../contexts/api'
 
 export function getCookie(name: string) {
   const value = `; ${document.cookie}`

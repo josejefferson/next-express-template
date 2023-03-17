@@ -1,5 +1,6 @@
 import { FormControl, FormLabel, Input } from '@chakra-ui/react'
-import { FastField, FieldProps } from 'formik'
+import type { FieldProps } from 'formik'
+import { FastField } from 'formik'
 import fp from '../../../utils/ultra-fast-field-props'
 
 function Photo() {

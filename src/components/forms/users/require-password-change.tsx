@@ -1,5 +1,6 @@
 import { Checkbox } from '@chakra-ui/react'
-import { Field, FieldProps } from 'formik'
+import type { FieldProps } from 'formik'
+import { Field } from 'formik'
 
 function RequirePasswordChange() {
   return (

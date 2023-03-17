@@ -1,7 +1,7 @@
 import { AspectRatio, Button, Center, Container, SimpleGrid, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { IconType } from 'react-icons'
+import type { IconType } from 'react-icons'
 import Nav from '../components/navbar'
 import { MENU } from '../components/navbar/drawer'
 import { useAuth } from '../contexts/auth'

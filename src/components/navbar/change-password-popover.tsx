@@ -12,7 +12,8 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { ReactNode, useEffect } from 'react'
+import type { ReactNode } from 'react'
+import { useEffect } from 'react'
 import { useAuth } from '../../contexts/auth'
 
 interface IProps {

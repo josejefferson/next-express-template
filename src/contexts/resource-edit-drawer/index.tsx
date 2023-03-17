@@ -9,12 +9,15 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import { MdOpenInNew } from 'react-icons/md'
 import useLocalStorageState from 'use-local-storage-state'
 import { useAPI } from '../api'
-import ResourceAdd, { IResourceAddProps } from '../resource-add'
-import ResourceEdit, { IResourceEditProps } from '../resource-edit'
+import type { IResourceAddProps } from '../resource-add'
+import ResourceAdd from '../resource-add'
+import type { IResourceEditProps } from '../resource-edit'
+import ResourceEdit from '../resource-edit'
 import { useResourceList } from '../resource-list'
 
 export interface IValue {

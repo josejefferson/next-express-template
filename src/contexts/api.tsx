@@ -1,16 +1,7 @@
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
-import {
-  createContext,
-  FC,
-  Fragment,
-  PropsWithChildren,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useState
-} from 'react'
+import type { FC, PropsWithChildren, ReactNode } from 'react'
+import { createContext, Fragment, useCallback, useContext, useEffect, useState } from 'react'
 import Failed from '../components/common/failed'
 import Loading from '../components/common/loading'
 import api from '../utils/api'

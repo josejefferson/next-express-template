@@ -1,16 +1,10 @@
 import { useToast } from '@chakra-ui/react'
-import {
-  ComponentProps,
-  createContext,
-  FC,
-  Fragment,
-  PropsWithChildren,
-  ReactNode,
-  useContext
-} from 'react'
+import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react'
+import { createContext, Fragment, useContext } from 'react'
 import Nav from '../../components/navbar'
 import api from '../../utils/api'
-import API, { IProps as IAPIProps } from '../api'
+import type { IProps as IAPIProps } from '../api'
+import API from '../api'
 import Form from '../resource-edit/form'
 
 export interface IValue extends IResourceEditProps {
