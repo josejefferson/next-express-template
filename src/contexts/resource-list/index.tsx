@@ -75,7 +75,9 @@ function Bottom() {
     <>
       {!hideStatusbar && <StatusBar />}
       {!hideAddButton && (
-        <Add deny={writePermissions && auth?.user && !auth?.hasPermission(writePermissions)} />
+        <Add
+          deny={writePermissions && auth?.user && !auth?.hasPermission(writePermissions) ? 1 : 0}
+        />
       )}
     </>
   )

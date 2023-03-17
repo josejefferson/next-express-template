@@ -1,20 +1,25 @@
 import { AspectRatio, Button, Center, Container, SimpleGrid, Text } from '@chakra-ui/react'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { IconType } from 'react-icons'
 import Nav from '../components/navbar'
 import { MENU } from '../components/navbar/drawer'
 import { useAuth } from '../contexts/auth'
-import { getTimeSaudation } from '../utils/helpers'
+import { getName, getTimeSaudation } from '../utils/helpers'
 
 export default function Main() {
   const { user } = useAuth()
+  const [timeSaudation, setTimeSaudation] = useState<string>()
+  useEffect(() => {
+    setTimeSaudation(getTimeSaudation())
+  }, [])
 
   return (
     <>
       <Nav />
       <Container maxW="4xl" my={3}>
         <Text mt={2} mb={6} textAlign="center" fontSize="5xl" fontWeight={300}>
-          {getTimeSaudation()} {user?.name?.split(' ')?.[0] || user?.name}!
+          {timeSaudation} {getName(user?.name)}!
         </Text>
 
         <SimpleGrid columns={[2, 3, 4, 5, 6]} spacing={2}>

@@ -1,13 +1,19 @@
-import { boomify, internal, isBoom } from '@hapi/boom'
+import { boomify, forbidden, internal, isBoom } from '@hapi/boom'
 import { NextFunction, Request, Response } from 'express'
-import { readFileSync } from 'fs'
+import { ERROR_PAGE } from '../helpers'
 
 export default function error(error: any, req: Request, res: Response, next: NextFunction) {
+  if (error?.code === 'EBADCSRFTOKEN') {
+    error = forbidden(
+      'Falha na verificação do token CSRF, verifique se os cookies estão ativados ou recarregue a página'
+    )
+  }
+
   if (!isBoom(error)) {
     console.error(error)
-    error.statusCode
-      ? (error = boomify(error, { statusCode: error.statusCode }))
-      : (error = internal(error.message))
+    error?.statusCode
+      ? (error = boomify(error, { statusCode: error?.statusCode }))
+      : (error = internal(error?.message))
   }
 
   res.status(error.output.statusCode)
@@ -16,15 +22,15 @@ export default function error(error: any, req: Request, res: Response, next: Nex
 
   // Envia em formato JSON
   if (accept === 'json') {
-    return res.json(Object.assign(error.output.payload, { message: error.message }))
+    return res.json(Object.assign(error?.output?.payload, { message: error?.message }))
   }
 
   try {
     // Envia a página HTML de erro
-    let html = readFileSync('static/error/index.html', { encoding: 'utf-8' })
+    let html = ERROR_PAGE
     html = html.replace(
       /%0/g,
-      `${error.output.payload.statusCode || ''} ${error.output.payload.error || ''}`
+      `${error?.output?.payload?.statusCode || ''} ${error?.output?.payload?.error || ''}`
     )
     html = html.replace(/%1/g, error.output.payload.error === error.message ? '' : error.message)
     res.send(html)

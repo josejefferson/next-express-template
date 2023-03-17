@@ -9,6 +9,7 @@ import {
   ReactNode,
   useContext
 } from 'react'
+import useLocalStorageState from 'use-local-storage-state'
 import Nav from '../../components/navbar'
 import api from '../../utils/api'
 import Form from '../resource-edit/form'
@@ -43,6 +44,7 @@ export interface IResourceAddProps {
 export default function ResourceAdd(props: IResourceAddProps) {
   const toast = useToast()
   const router = useRouter()
+  const [saveAndAdd] = useLocalStorageState('saveAndAdd', { defaultValue: false })
   let {
     children,
     layout,
@@ -84,7 +86,8 @@ export default function ResourceAdd(props: IResourceAddProps) {
           isClosable: true
         })
         if (onSave) return onSave(data)
-        router.replace(`/${id}/edit/?id=${data._id}`)
+        if (saveAndAdd) router.reload()
+        else router.replace(`/${id}/edit/?id=${data._id}`)
       })
       .catch((err) => {
         setSubmitting(false)

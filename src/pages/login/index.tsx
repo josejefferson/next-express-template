@@ -22,6 +22,7 @@ import { MdDone, MdLock, MdPerson, MdVisibility, MdVisibilityOff } from 'react-i
 import Nav from '../../components/navbar'
 import { useAuth } from '../../contexts/auth'
 import api from '../../utils/api'
+import { getName } from '../../utils/helpers'
 
 export default function Signup() {
   const [loggedName, setLoggedName] = useState<string>()
@@ -68,7 +69,7 @@ export default function Signup() {
               >
                 <MdDone size={128} />
                 <Box className="login-success-name" fontWeight={500} fontSize="lg" mt={3}>
-                  Bem-vindo(a) {loggedName?.split(' ')[0] || 'Usuário'}!
+                  Bem-vindo(a) {getName(loggedName) || 'Usuário'}!
                 </Box>
               </Center>
             </Center>
@@ -104,9 +105,10 @@ const LoginForm = ({ setLoggedName }: any) => {
           expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
           path: '/'
         })
-        setTimeout(refresh, 1000)
+        setTimeout(() => refresh(), 10)
         setLoggedName(data.name || 'Usuário')
-        setTimeout(() => router.replace((router.query.continue as string) || '/'), 1000)
+        const redirect = (router.query.continue as string) || '/'
+        setTimeout(() => (location.href = redirect), 1000)
       })
       .catch((err) => {
         if (err?.response?.data?.message === 'Usuário ou senha incorretos') return setInvalid(true)

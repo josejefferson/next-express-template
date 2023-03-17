@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useAuth } from '../../contexts/auth'
-import { getAvatarColor } from '../../utils/helpers'
+import { getAvatarColor, getName } from '../../utils/helpers'
 import ChangePasswordPopover from './change-password-popover'
 
 interface IProps {
@@ -47,7 +47,7 @@ export default function User({ hideChangePasswordPopover }: IProps) {
           />
         </Center>
 
-        <Center my={5}>{user?.name}</Center>
+        <Center my={5}>{getName(user?.name)}</Center>
 
         <MenuDivider />
 

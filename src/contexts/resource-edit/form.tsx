@@ -40,13 +40,17 @@ const Form = withErrorBoundary(
           <Box display="block" mt={2}>
             {customButtonsStart}
             <Remove
-              deny={res?.writePermissions && auth && !auth?.hasPermission(res?.writePermissions)}
+              deny={
+                res?.writePermissions && auth && !auth?.hasPermission(res?.writePermissions) ? 1 : 0
+              }
             />
             {customButtonsEnd}
           </Box>
           {children}
           <Save
-            deny={res?.writePermissions && auth && !auth?.hasPermission(res?.writePermissions)}
+            deny={
+              res?.writePermissions && auth && !auth?.hasPermission(res?.writePermissions) ? 1 : 0
+            }
           />
         </FormikForm>
       </Formik>

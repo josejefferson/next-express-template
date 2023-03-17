@@ -1,12 +1,21 @@
 import { Button, ButtonProps, Tooltip } from '@chakra-ui/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { MdAdd } from 'react-icons/md'
 import { useResourceList } from '.'
 import { useResourceEditDrawer } from '../resource-edit-drawer'
 
-export default function Add(props: ButtonProps & { deny?: boolean }) {
+export default function Add(props: ButtonProps & { deny?: 0 | 1 }) {
+  const router = useRouter()
   const { id, name, namePlural } = useResourceList()
   const drawer = useResourceEditDrawer()
+  useHotkeys('alt+a', (e) => {
+    e.preventDefault()
+    if (!drawer) return router.push('/' + id + '/add')
+    drawer.setEditingID(null)
+    drawer.onOpen()
+  })
 
   return (
     <Link href={id + '/add'}>
@@ -18,6 +27,7 @@ export default function Add(props: ButtonProps & { deny?: boolean }) {
       >
         <Button
           aria-label={'Adicionar ' + name.toLowerCase()}
+          title="Alt+A"
           boxShadow="base"
           colorScheme="green"
           rounded="full"
@@ -26,14 +36,13 @@ export default function Add(props: ButtonProps & { deny?: boolean }) {
           bottom="3"
           size="lg"
           leftIcon={<MdAdd />}
-          disabled={props.deny}
+          disabled={!!props.deny}
           onClick={(e) => {
-            if (drawer) {
-              e.preventDefault()
-              e.stopPropagation()
-              drawer.setEditingID(null)
-              drawer.onOpen()
-            }
+            if (!drawer) return
+            e.preventDefault()
+            e.stopPropagation()
+            drawer.setEditingID(null)
+            drawer.onOpen()
           }}
           {...props}
         >

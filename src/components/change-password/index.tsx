@@ -1,5 +1,4 @@
-import { theme, useToast } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
+import { useToast } from '@chakra-ui/react'
 import { useState } from 'react'
 import api from '../../utils/api'
 import ChangePasswordAlerts from './alerts'
@@ -7,7 +6,6 @@ import ChangePasswordForm from './form'
 
 export default function ChangePassword() {
   const toast = useToast()
-  const router = useRouter()
   const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = (e: any) => {
@@ -19,7 +17,7 @@ export default function ChangePassword() {
       .post('/auth/change-password', { oldPassword, password })
       .then(() => {
         toast(success())
-        setTimeout(() => router.replace('/'), 1000)
+        setTimeout(() => (location.href = '/'), 1000)
       })
       .catch((err) => {
         toast(error(err))

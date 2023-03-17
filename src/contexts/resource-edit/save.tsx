@@ -1,16 +1,47 @@
 import { Button, IconButton, Tooltip, useMediaQuery } from '@chakra-ui/react'
 import { useFormikContext } from 'formik'
-import { MdSave } from 'react-icons/md'
+import { useRef } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { MdSave, MdSaveAs } from 'react-icons/md'
+import useLocalStorageState from 'use-local-storage-state'
 
-export default function Save({ deny }: { deny?: boolean }) {
+export default function Save({ deny }: { deny?: 0 | 1 }) {
   const { isSubmitting } = useFormikContext()
   const [isMedium] = useMediaQuery('(min-width: 768px)')
+  const [saveAndAdd, setSaveAndAdd] = useLocalStorageState('saveAndAdd', {
+    defaultValue: false
+  })
+  const ref = useRef<HTMLButtonElement>(null)
+  useHotkeys(
+    'ctrl+s',
+    () => {
+      const focusEl: any = document.activeElement
+      focusEl?.blur?.()
+      ref.current?.click()
+      focusEl?.focus?.()
+    },
+    {
+      enableOnFormTags: true,
+      preventDefault: true
+    }
+  )
 
   if (!isMedium) {
     return (
-      <Tooltip label={deny ? 'Você não tem permissão para editar' : 'Salvar'} placement="left">
+      <Tooltip
+        label={
+          deny ? 'Você não tem permissão para editar' : saveAndAdd ? 'Salvar e adicionar' : 'Salvar'
+        }
+        placement="left"
+      >
         <IconButton
-          aria-label="Salvar"
+          ref={ref}
+          title="Ctrl+S"
+          aria-label={saveAndAdd ? 'Salvar e adicionar' : 'Salvar'}
+          onContextMenu={(e) => {
+            e.preventDefault()
+            setSaveAndAdd(!saveAndAdd)
+          }}
           isLoading={isSubmitting}
           type="submit"
           colorScheme="blue"
@@ -22,7 +53,7 @@ export default function Save({ deny }: { deny?: boolean }) {
           zIndex="1"
           disabled={isSubmitting ?? deny}
         >
-          <MdSave />
+          {saveAndAdd ? <MdSave /> : <MdSaveAs />}
         </IconButton>
       </Tooltip>
     )
@@ -30,12 +61,18 @@ export default function Save({ deny }: { deny?: boolean }) {
     return (
       <Tooltip label="Você não tem permissão para editar" placement="left" isDisabled={!deny}>
         <Button
+          ref={ref}
+          title="Ctrl+S"
+          onContextMenu={(e) => {
+            e.preventDefault()
+            setSaveAndAdd(!saveAndAdd)
+          }}
           isLoading={isSubmitting}
           type="submit"
           colorScheme="blue"
           mt="2"
           rounded="full"
-          leftIcon={<MdSave />}
+          leftIcon={saveAndAdd ? <MdSave /> : <MdSaveAs />}
           position="fixed"
           right="3"
           bottom="3"
@@ -43,7 +80,7 @@ export default function Save({ deny }: { deny?: boolean }) {
           zIndex="1"
           disabled={isSubmitting ?? deny}
         >
-          Salvar
+          {saveAndAdd ? 'Salvar e adicionar' : 'Salvar'}
         </Button>
       </Tooltip>
     )

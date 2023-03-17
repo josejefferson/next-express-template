@@ -1,10 +1,12 @@
 import axios from 'axios'
+import getConfig from 'next/config'
 import { getCookie } from './helpers'
+const { publicRuntimeConfig } = getConfig()
 
 axios.defaults.withCredentials = true
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API || '/api/',
+  baseURL: publicRuntimeConfig.apiEndpoint || '/api/',
   withCredentials: true
 })
 

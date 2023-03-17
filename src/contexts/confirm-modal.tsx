@@ -1,15 +1,16 @@
 import {
+  Button,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
   ModalBody,
+  ModalCloseButton,
+  ModalContent,
   ModalFooter,
-  Button
+  ModalHeader,
+  ModalOverlay
 } from '@chakra-ui/react'
 import { Router } from 'next/router'
 import { createContext, PropsWithChildren, ReactNode, useContext, useRef, useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 type IValue = (params: string | IConfirmDialogParams) => Promise<boolean>
 
@@ -25,13 +26,24 @@ export const ConfirmModalContext = createContext<IValue>(() => {
 })
 export const useConfirmModal = () => useContext(ConfirmModalContext)
 
+const defaultConfirmButton = (
+  <>
+    <u>S</u>im
+  </>
+)
+const defaultCancelButton = (
+  <>
+    <u>N</u>ão
+  </>
+)
 export default function ConfirmModalProvider({ children }: PropsWithChildren) {
   const [open, setOpen] = useState(false)
   const [title, setTitle] = useState<string | ReactNode>('')
   const [body, setBody] = useState<string | ReactNode>('')
-  const [confirmButton, setConfirmButton] = useState<string | ReactNode>('Sim')
-  const [cancelButton, setCancelButton] = useState<string | ReactNode>('Não')
+  const [confirmButton, setConfirmButton] = useState<string | ReactNode>(defaultConfirmButton)
+  const [cancelButton, setCancelButton] = useState<string | ReactNode>(defaultCancelButton)
 
+  const initialRef = useRef(null)
   const resolveRef = useRef<(value: boolean) => any>(() => {})
   const resolve = resolveRef.current
 
@@ -40,8 +52,8 @@ export default function ConfirmModalProvider({ children }: PropsWithChildren) {
     resolve(false)
     setTitle(params.title ?? '')
     setBody(params.body ?? '')
-    setConfirmButton(params.confirmButton ?? 'Sim')
-    setCancelButton(params.cancelButton ?? 'Não')
+    setConfirmButton(params.confirmButton ?? defaultConfirmButton)
+    setCancelButton(params.cancelButton ?? defaultCancelButton)
     setOpen(true)
 
     return new Promise<boolean>((resolve) => {
@@ -59,11 +71,14 @@ export default function ConfirmModalProvider({ children }: PropsWithChildren) {
     setOpen(false)
   }
 
+  useHotkeys('s', ok)
+  useHotkeys('n', cancel)
+
   Router.events.on('routeChangeComplete', cancel)
 
   return (
     <ConfirmModalContext.Provider value={confirmDialog}>
-      <Modal isOpen={open} onClose={cancel}>
+      <Modal isOpen={open} onClose={cancel} initialFocusRef={initialRef}>
         <ModalOverlay />
         <ModalContent m={3}>
           <ModalHeader>{title}</ModalHeader>
@@ -71,7 +86,7 @@ export default function ConfirmModalProvider({ children }: PropsWithChildren) {
           <ModalBody hidden={!body}>{body}</ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={ok}>
+            <Button colorScheme="blue" mr={3} onClick={ok} ref={initialRef}>
               {confirmButton}
             </Button>
             <Button onClick={cancel}>{cancelButton}</Button>

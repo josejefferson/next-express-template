@@ -37,7 +37,7 @@ const Resources = withErrorBoundary(
         </Layout>
 
         {!hideAddButton && (
-          <Add deny={writePermissions && auth && !auth?.hasPermission(writePermissions)} />
+          <Add deny={writePermissions && auth && !auth?.hasPermission(writePermissions) ? 1 : 0} />
         )}
       </>
     )

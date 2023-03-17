@@ -1,5 +1,6 @@
 import { Box, Container } from '@chakra-ui/layout'
 import { IconButton, useColorModeValue } from '@chakra-ui/react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { MdRefresh } from 'react-icons/md'
 import { useResourceList } from '.'
 import { useAPI } from '../api'
@@ -9,6 +10,7 @@ export default function StatusBar() {
   const { data, loading, error, refresh } = useAPI()
   const length: number = data?.length
   const { name, namePlural } = useResourceList()
+  useHotkeys('alt+r', refresh, { preventDefault: true })
 
   return (
     <Box
@@ -26,7 +28,14 @@ export default function StatusBar() {
       hidden={length === undefined}
     >
       <Container maxW="8xl" p={0}>
-        <IconButton aria-label="Atualizar" size="xs" variant="ghost" mr={1} onClick={refresh}>
+        <IconButton
+          aria-label="Atualizar"
+          size="xs"
+          variant="ghost"
+          mr={1}
+          onClick={refresh}
+          title="Alt+R"
+        >
           <MdRefresh />
         </IconButton>
         <span>

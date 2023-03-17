@@ -11,6 +11,7 @@ import {
 import Link from 'next/link'
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
 import { MdOpenInNew } from 'react-icons/md'
+import useLocalStorageState from 'use-local-storage-state'
 import { useAPI } from '../api'
 import ResourceAdd, { IResourceAddProps } from '../resource-add'
 import ResourceEdit, { IResourceEditProps } from '../resource-edit'
@@ -53,6 +54,7 @@ export default function ResourceEditDrawer({
   const [editingID, setEditingID] = useState<string | null>(null)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const value = useMemo(() => ({ isOpen, onOpen, onClose, editingID, setEditingID }), [])
+  const [saveAndAdd] = useLocalStorageState('saveAndAdd', { defaultValue: false })
 
   return (
     <ResourceEditDrawerContext.Provider value={value}>
@@ -101,7 +103,12 @@ export default function ResourceEditDrawer({
                 defaultData={defaultData}
                 hideNavbar
                 onSave={(data) => {
-                  setEditingID(data._id)
+                  if (saveAndAdd) {
+                    onClose()
+                    setTimeout(() => onOpen(), 500)
+                  } else {
+                    setEditingID(data._id)
+                  }
                   api?.refresh()
                 }}
               >

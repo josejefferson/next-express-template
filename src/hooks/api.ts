@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 import api from '../utils/api'
@@ -36,7 +37,7 @@ export default function useAPIHook<T = any>(
         setError(err)
       })
       .finally(() => setLoading(false))
-  }, [url, axiosOptions, disable, showLoading, axiosThen])
+  }, [url, disable, showLoading])
 
   useEffect(refresh, [refresh])
 

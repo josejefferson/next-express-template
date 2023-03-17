@@ -2,19 +2,26 @@ import { Button, Tooltip, useToast } from '@chakra-ui/react'
 import { useFormikContext } from 'formik'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { MdDelete } from 'react-icons/md'
 import { useResourceEdit } from '.'
 import api from '../../utils/api'
+import { useConfirmModal } from '../confirm-modal'
 
-export default function Remove({ deny }: { deny?: boolean }) {
+export default function Remove({ deny }: { deny?: 0 | 1 }) {
   const toast = useToast()
   const router = useRouter()
   const { values }: any = useFormikContext()
+  const confirmDialog = useConfirmModal()
   const [loading, setLoading] = useState(false)
   const res = useResourceEdit()
 
   const handleDelete = async () => {
-    if (!confirm('Tem certeza que deseja excluir?')) return
+    const confirmed = await confirmDialog({
+      title: 'Excluir ' + res.name.toLowerCase(),
+      body: `Tem certeza que deseja excluir ${res.nameFem ? 'a' : 'o'} ${res.name.toLowerCase()}?`
+    })
+    if (!confirmed) return
     setLoading(true)
     return api
       .delete(`${res?.url}/${res?.elementID}`)
@@ -40,9 +47,15 @@ export default function Remove({ deny }: { deny?: boolean }) {
       })
   }
 
+  useHotkeys('alt+x', handleDelete, {
+    enableOnFormTags: true,
+    preventDefault: true
+  })
+
   return (
     <Tooltip label="Você não tem permissão para excluir" placement="bottom" isDisabled={!deny}>
       <Button
+        title="Alt+X"
         leftIcon={<MdDelete />}
         rounded="full"
         colorScheme="red"

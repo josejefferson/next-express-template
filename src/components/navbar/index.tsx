@@ -1,6 +1,7 @@
 import { Box, Container, Flex, IconButton, Stack, useColorModeValue } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 import { MdArrowBack } from 'react-icons/md'
+import KeyboardShortcuts from '../common/keyboard-shortcuts'
 import ColorMode from './color-mode'
 import MyDrawer from './drawer'
 import Title from './title'
@@ -62,6 +63,9 @@ export default function Nav({
             {/* Botões da direita */}
             <Stack direction="row" spacing={2}>
               {customButtons}
+
+              {/* Atalhos de teclado */}
+              <KeyboardShortcuts />
 
               {/* Tema claro/escuro */}
               <ColorMode />
