@@ -45,7 +45,7 @@ export default function ResourceAdd(props: IResourceAddProps) {
   const toast = useToast()
   const router = useRouter()
   const [saveAndAdd] = useLocalStorageState('saveAndAdd', { defaultValue: false })
-  let {
+  const {
     children,
     layout,
     id,

@@ -1,3 +1,5 @@
+import { ButtonProps } from '@chakra-ui/react'
+import Link from 'next/link'
 import { ComponentProps, createContext, FC, PropsWithChildren, ReactNode, useContext } from 'react'
 import Nav from '../../components/navbar'
 import API, { IProps as IAPIProps } from '../api'
@@ -24,6 +26,7 @@ interface IProps {
   nameFem?: boolean
   namePlural?: string
   url?: string
+  removeURL?: string
   writePermissions?: string[]
   hideNavbar?: boolean
   hideStatusbar?: boolean
@@ -31,10 +34,12 @@ interface IProps {
   node?: ReactNode
   navProps?: ComponentProps<typeof Nav>
   apiProps?: Partial<IAPIProps>
+  addButtonProps?: ButtonProps
+  addButtonLinkProps?: ComponentProps<typeof Link>
 }
 
 export default function ResourceList(props: IProps) {
-  let {
+  const {
     children,
     outLayout,
     id,
@@ -70,13 +75,14 @@ export default function ResourceList(props: IProps) {
 
 function Bottom() {
   const auth = useAuth()
-  const { hideStatusbar, hideAddButton, writePermissions } = useResourceList()
+  const { hideStatusbar, hideAddButton, writePermissions, addButtonProps } = useResourceList()
   return (
     <>
       {!hideStatusbar && <StatusBar />}
       {!hideAddButton && (
         <Add
           deny={writePermissions && auth?.user && !auth?.hasPermission(writePermissions) ? 1 : 0}
+          {...addButtonProps}
         />
       )}
     </>

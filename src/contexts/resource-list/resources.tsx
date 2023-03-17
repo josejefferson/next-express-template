@@ -13,7 +13,7 @@ const Resources = withErrorBoundary(
     const apiContext = useAPI()
     const auth = useAuth()
     const { data } = apiContext
-    const { name, nameFem, id, url, writePermissions, hideAddButton, layout } = useResourceList()
+    const { name, nameFem, id, url, removeURL, writePermissions, hideAddButton, layout } = useResourceList()
     const Layout = layout ?? Fragment
 
     return (
@@ -27,6 +27,7 @@ const Resources = withErrorBoundary(
               nameFem={nameFem}
               id={id}
               url={url}
+              removeURL={removeURL}
               element={element}
               apiContext={apiContext}
               key={i}

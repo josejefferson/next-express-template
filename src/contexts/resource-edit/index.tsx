@@ -45,7 +45,7 @@ export interface IResourceEditProps {
 
 export default function ResourceEdit(props: IResourceEditProps) {
   const toast = useToast()
-  let {
+  const {
     children,
     layout,
     id,
@@ -74,7 +74,7 @@ export default function ResourceEdit(props: IResourceEditProps) {
 
   // Envia os dados
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
-    let { createdAt, createdBy, updatedAt, updatedBy, ...otherValues } = values
+    const { createdAt, createdBy, updatedAt, updatedBy, ...otherValues } = values
     values = otherValues
     if (beforeSubmit) values = beforeSubmit(values)
     if (!values) return

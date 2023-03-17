@@ -8,7 +8,7 @@ import { useResourceEditDrawer } from '../resource-edit-drawer'
 
 export default function Add(props: ButtonProps & { deny?: 0 | 1 }) {
   const router = useRouter()
-  const { id, name, namePlural } = useResourceList()
+  const { id, name, namePlural, addButtonLinkProps } = useResourceList()
   const drawer = useResourceEditDrawer()
   useHotkeys('alt+a', (e) => {
     e.preventDefault()
@@ -18,7 +18,7 @@ export default function Add(props: ButtonProps & { deny?: 0 | 1 }) {
   })
 
   return (
-    <Link href={id + '/add'}>
+    <Link href={id + '/add'} {...addButtonLinkProps}>
       <Tooltip
         label={'Você não tem permissão para adicionar ' + namePlural.toLowerCase()}
         placement="top-end"

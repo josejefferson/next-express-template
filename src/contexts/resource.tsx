@@ -20,6 +20,7 @@ interface IProps {
   nameFem: boolean
   id: string
   url: string
+  removeURL?: string
   element: any
   apiContext?: IAPIValue
 }
@@ -33,6 +34,7 @@ export default function Resource({
   nameFem,
   id: resourceID,
   url,
+  removeURL,
   element,
   apiContext
 }: IProps) {
@@ -46,7 +48,7 @@ export default function Resource({
   }
 
   const remove = () => {
-    return api.delete(`${url}/${element._id}`)
+    return api.delete(`${removeURL ?? url}/${element._id}`)
   }
 
   const handleRemove = async (e: any, confirmation = true) => {
@@ -66,7 +68,7 @@ export default function Resource({
       duration: 100000
     })
 
-    remove()
+    return remove()
       .then(() => {
         toast.update(toastId, {
           title: `${name} excluíd${nameFem ? 'a' : 'o'} com sucesso`,
