@@ -4,6 +4,7 @@ setLocale(pt)
 
 export const userPostSchema = object({
   name: string().trim().required().label('Nome'),
+  nickname: string().nullable().default('').label('Apelido'),
   username: string().trim().lowercase().required().label('Nome de usuário'),
   photo: string().nullable().default('').label('Foto'),
   password: string().required().label('Senha'),
@@ -13,6 +14,7 @@ export const userPostSchema = object({
 
 export const userPutSchema = object({
   name: string().trim().required().label('Nome'),
+  nickname: string().nullable().default('').label('Apelido'),
   username: string().trim().lowercase().required().label('Nome de usuário'),
   photo: string().nullable().default('').label('Foto'),
   password: string().label('Senha'),

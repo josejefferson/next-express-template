@@ -5,6 +5,7 @@ import { can } from '../helpers/permissions'
 
 export interface IUser extends Document {
   name: string
+  nickname?: string
   photo?: string
   username: string
   password: string
@@ -21,6 +22,7 @@ export interface IUser extends Document {
 const schema = new mongoose.Schema<IUser>(
   {
     name: { type: String, required: true },
+    nickname: { type: String },
     photo: { type: String },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },

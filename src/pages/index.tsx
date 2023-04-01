@@ -19,7 +19,7 @@ export default function Main() {
       <Nav />
       <Container maxW="4xl" my={3}>
         <Text mt={2} mb={6} textAlign="center" fontSize="5xl" fontWeight={300}>
-          {timeSaudation} {getName(user?.name)}!
+          {timeSaudation} {user?.nickname || getName(user?.name)}!
         </Text>
 
         <SimpleGrid columns={[2, 3, 4, 5, 6]} spacing={2}>

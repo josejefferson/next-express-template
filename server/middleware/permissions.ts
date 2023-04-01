@@ -1,4 +1,4 @@
-import { badRequest, forbidden, unauthorized } from '@hapi/boom'
+import { forbidden, unauthorized } from '@hapi/boom'
 import { NextFunction, Request, Response } from 'express'
 import env from '../config/env'
 import { can } from '../helpers/permissions'
@@ -12,7 +12,7 @@ export function needPermission(permissions: string | string[], message?: string)
     if (env.disableAuth) return next()
     if (!req.user || !req.user.id) throw unauthorized('Você precisa estar logado para prosseguir')
     const user = await Users.findById(req.user.id)
-    if (!user) throw badRequest('Você não está mais logado, faça login para continuar')
+    if (!user) throw unauthorized('Você não está mais logado, faça login para continuar')
     Object.assign(req.user, user.toObject())
     const hasPermission = can(user.permissions, permissions as string[])
     if (!hasPermission) throw forbidden(message || 'Você não tem permissão')

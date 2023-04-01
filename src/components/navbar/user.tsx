@@ -47,7 +47,7 @@ export default function User({ hideChangePasswordPopover }: IProps) {
           />
         </Center>
 
-        <Center my={5}>{getName(user?.name)}</Center>
+        <Center my={5}>{user?.nickname || getName(user?.name)}</Center>
 
         <MenuDivider />
 
