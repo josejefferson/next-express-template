@@ -34,6 +34,9 @@ interface IProps {
   hideStatusbar?: boolean
   hideAddButton?: boolean
   node?: ReactNode
+  useGridAndListLayout?: boolean
+  listLayout?: FC<PropsWithChildren>
+  listNode?: ReactNode
   navProps?: ComponentProps<typeof Nav>
   apiProps?: Partial<IAPIProps>
   addButtonProps?: ButtonProps
@@ -51,6 +54,7 @@ export default function ResourceList(props: IProps) {
     url,
     hideNavbar,
     node,
+    listNode,
     navProps,
     apiProps
   } = props
@@ -68,7 +72,7 @@ export default function ResourceList(props: IProps) {
         {!hideNavbar && <Nav title={value.namePlural} {...navProps} />}
 
         <API {...apiProps} url={value.url} after={<Bottom />} layout={outLayout}>
-          {children ?? <Resources node={node} />}
+          {children ?? <Resources node={node} listNode={listNode} />}
         </API>
       </ResourceListContext.Provider>
     </>

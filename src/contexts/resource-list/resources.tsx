@@ -1,27 +1,50 @@
-import type { ReactNode } from 'react'
-import { Fragment } from 'react'
+import { Box, ButtonGroup, IconButton, Tooltip } from '@chakra-ui/react'
+import { Fragment, ReactNode } from 'react'
 import type { FallbackProps } from 'react-error-boundary'
 import { withErrorBoundary } from 'react-error-boundary'
+import { MdList, MdOutlineGridOn } from 'react-icons/md'
+import useLocalStorageState from 'use-local-storage-state'
 import { useResourceList } from '.'
 import Failed from '../../components/common/failed'
 import { useAPI } from '../api'
-import { useAuth } from '../auth'
 import Resource from '../resource'
-import Add from './add'
 import Empty from './empty'
 
 const Resources = withErrorBoundary(
-  function ({ node }: { node: ReactNode }) {
+  function ({ node, listNode }: { node: ReactNode; listNode: ReactNode }) {
     const apiContext = useAPI()
-    const auth = useAuth()
     const { data } = apiContext
-    const { name, nameFem, id, url, removeURL, writePermissions, hideAddButton, layout } =
+    const { name, nameFem, id, url, removeURL, layout, useGridAndListLayout, listLayout } =
       useResourceList()
-    const Layout = layout ?? Fragment
+    const [showList, setShowList] = useLocalStorageState('showList-' + name, {
+      defaultValue: false
+    })
+    const Layout: any = useGridAndListLayout ? (showList ? listLayout : layout) : layout ?? Fragment
 
     return (
       <>
         {!data.length && <Empty />}
+
+        <Box textAlign="right" hidden={!useGridAndListLayout} pr={2} pt={2}>
+          <ButtonGroup size="sm" isAttached variant="outline">
+            <Tooltip label="Exibição em grade" placement="bottom-end">
+              <IconButton
+                onClick={() => setShowList(false)}
+                aria-label="Grade"
+                icon={<MdOutlineGridOn />}
+                variant={showList ? 'outline' : 'solid'}
+              />
+            </Tooltip>
+            <Tooltip label="Exibição em lista" placement="bottom-end">
+              <IconButton
+                onClick={() => setShowList(true)}
+                aria-label="Lista"
+                icon={<MdList />}
+                variant={!showList ? 'outline' : 'solid'}
+              />
+            </Tooltip>
+          </ButtonGroup>
+        </Box>
 
         <Layout>
           {data.map((element: any, i: number) => (
@@ -35,14 +58,10 @@ const Resources = withErrorBoundary(
               apiContext={apiContext}
               key={i}
             >
-              {node}
+              {useGridAndListLayout ? (showList ? listNode : node) : node}
             </Resource>
           ))}
         </Layout>
-
-        {!hideAddButton && (
-          <Add deny={writePermissions && auth && !auth?.hasPermission(writePermissions) ? 1 : 0} />
-        )}
       </>
     )
   },

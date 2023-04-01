@@ -108,7 +108,7 @@ export default function ResourceEditDrawer({
                 onSave={(data) => {
                   if (saveAndAdd) {
                     onClose()
-                    setTimeout(() => onOpen(), 500)
+                    setTimeout(() => onOpen(), 1000)
                   } else {
                     setEditingID(data._id)
                   }
