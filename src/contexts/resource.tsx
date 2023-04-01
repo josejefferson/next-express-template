@@ -2,7 +2,7 @@ import { useToast } from '@chakra-ui/toast'
 import type { Axios } from 'axios'
 import type { ReactNode } from 'react'
 import { createContext, useContext } from 'react'
-import api from '../utils/api'
+import api from '#utils/api'
 import type { IValue as IAPIValue } from './api'
 import { useConfirmModal } from './confirm-modal'
 

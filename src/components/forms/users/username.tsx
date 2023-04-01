@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, Input, InputGroup, InputLeftAddon } from '@chakra-ui/react'
 import type { FieldProps } from 'formik'
 import { FastField } from 'formik'
-import fp from '../../../utils/ultra-fast-field-props'
+import fp from '#utils/ultra-fast-field-props'
 
 function Username() {
   return (

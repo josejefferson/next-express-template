@@ -14,7 +14,7 @@ import {
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { useEffect } from 'react'
-import { useAuth } from '../../contexts/auth'
+import { useAuth } from '#contexts/auth'
 
 interface IProps {
   children: ReactNode

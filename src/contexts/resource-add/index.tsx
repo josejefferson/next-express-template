@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react'
 import { createContext, Fragment, useContext } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
-import Nav from '../../components/navbar'
-import api from '../../utils/api'
+import Nav from '#components/navbar'
+import api from '#utils/api'
 import Form from '../resource-edit/form'
 
 export interface IValue extends IResourceAddProps {

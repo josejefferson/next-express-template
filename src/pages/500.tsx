@@ -1,7 +1,7 @@
 import { Button, Flex, Heading, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { MdHome, MdRefresh } from 'react-icons/md'
-import Nav from '../components/navbar'
+import Nav from '#components/navbar'
 
 export default function Error500() {
   const router = useRouter()

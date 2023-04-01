@@ -10,8 +10,8 @@ import {
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { MdDelete, MdOpenInNew } from 'react-icons/md'
-import { useResource } from '../../contexts/resource'
-import { getAvatarColor } from '../../utils/helpers'
+import { useResource } from '#contexts/resource'
+import { getAvatarColor } from '#utils/helpers'
 
 export default function User() {
   const { element, handleRemove, openInNewWindow } = useResource()

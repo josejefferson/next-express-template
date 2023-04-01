@@ -2,10 +2,10 @@ import { AspectRatio, Button, Center, Container, SimpleGrid, Text } from '@chakr
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import type { IconType } from 'react-icons'
-import Nav from '../components/navbar'
-import { MENU } from '../components/navbar/drawer'
-import { useAuth } from '../contexts/auth'
-import { getName, getTimeSaudation } from '../utils/helpers'
+import Nav from '#components/navbar'
+import { MENU } from '#components/navbar/drawer'
+import { useAuth } from '#contexts/auth'
+import { getName, getTimeSaudation } from '#utils/helpers'
 
 export default function Main() {
   const { user } = useAuth()

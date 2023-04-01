@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useCallback, useEffect, useState } from 'react'
-import api from '../utils/api'
+import api from '#utils/api'
 
 interface IOptions {
   disable?: boolean

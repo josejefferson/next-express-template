@@ -1,14 +1,14 @@
 import { Container, useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import type { PropsWithChildren } from 'react'
-import Name from '../../components/forms/users/name'
-import Nickname from '../../components/forms/users/nickname'
-import Password from '../../components/forms/users/password'
-import Permissions from '../../components/forms/users/permissions'
-import Photo from '../../components/forms/users/photo'
-import RequirePasswordChange from '../../components/forms/users/require-password-change'
-import Username from '../../components/forms/users/username'
-import ResourceEdit from '../../contexts/resource-edit'
+import Name from '#components/forms/users/name'
+import Nickname from '#components/forms/users/nickname'
+import Password from '#components/forms/users/password'
+import Permissions from '#components/forms/users/permissions'
+import Photo from '#components/forms/users/photo'
+import RequirePasswordChange from '#components/forms/users/require-password-change'
+import Username from '#components/forms/users/username'
+import ResourceEdit from '#contexts/resource-edit'
 
 export default function Edit() {
   const router = useRouter()

@@ -1,6 +1,6 @@
 import { Button, Flex, Heading, Text } from '@chakra-ui/react'
 import { MdHome } from 'react-icons/md'
-import Nav from '../components/navbar'
+import Nav from '#components/navbar'
 
 export default function Error404() {
   return (

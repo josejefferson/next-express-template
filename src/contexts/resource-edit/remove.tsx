@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { MdDelete } from 'react-icons/md'
 import { useResourceEdit } from '.'
-import api from '../../utils/api'
+import api from '#utils/api'
 import { useConfirmModal } from '../confirm-modal'
 
 export default function Remove({ deny }: { deny?: 0 | 1 }) {

@@ -3,8 +3,8 @@ import type { FieldProps } from 'formik'
 import { Field, useFormikContext } from 'formik'
 import type { MouseEvent } from 'react'
 import { MdAdd } from 'react-icons/md'
-import { AutoResizeTextarea } from '../../../utils/auto-size-textarea'
-import { permissions } from '../../../utils/permissions'
+import { AutoResizeTextarea } from '#utils/auto-size-textarea'
+import { permissions } from '#utils/permissions'
 
 function Permissions() {
   const { values, setFieldValue } = useFormikContext<any>()

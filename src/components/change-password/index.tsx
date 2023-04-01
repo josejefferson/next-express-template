@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react'
 import { useState } from 'react'
-import api from '../../utils/api'
+import api from '#utils/api'
 import ChangePasswordAlerts from './alerts'
 import ChangePasswordForm from './form'
 

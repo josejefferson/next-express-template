@@ -1,6 +1,6 @@
 import { Box, Heading } from '@chakra-ui/react'
 import Head from 'next/head'
-import { useNav } from '../../contexts/nav'
+import { useNav } from '#contexts/nav'
 
 interface IProps {
   title?: string

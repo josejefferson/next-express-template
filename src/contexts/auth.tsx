@@ -3,10 +3,10 @@ import { useRouter } from 'next/router'
 import type { ReactNode } from 'react'
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import type { IUser } from '../types/user'
-import api from '../utils/api'
-import { getLoginURL } from '../utils/helpers'
-import { can } from '../utils/permissions'
+import type { IUser } from '#types/user'
+import api from '#utils/api'
+import { getLoginURL } from '#utils/helpers'
+import { can } from '#utils/permissions'
 
 export interface IValue {
   user: any

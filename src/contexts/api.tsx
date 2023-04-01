@@ -2,10 +2,10 @@ import type { AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import type { FC, PropsWithChildren, ReactNode } from 'react'
 import { createContext, Fragment, useCallback, useContext, useEffect, useState } from 'react'
-import Failed from '../components/common/failed'
-import Loading from '../components/common/loading'
-import api from '../utils/api'
-import { getLoginURL } from '../utils/helpers'
+import Failed from '#components/common/failed'
+import Loading from '#components/common/loading'
+import api from '#utils/api'
+import { getLoginURL } from '#utils/helpers'
 
 export interface IValue {
   loading: boolean

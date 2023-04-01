@@ -9,8 +9,8 @@ import {
   SkeletonCircle
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { useAuth } from '../../contexts/auth'
-import { getAvatarColor, getName } from '../../utils/helpers'
+import { useAuth } from '#contexts/auth'
+import { getAvatarColor, getName } from '#utils/helpers'
 import ChangePasswordPopover from './change-password-popover'
 
 interface IProps {
