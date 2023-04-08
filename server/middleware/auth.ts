@@ -44,3 +44,11 @@ export const authLogin = (req: any, res: Response, next: NextFunction) => {
     res.redirect('/login?continue=' + encodeURIComponent(req.originalUrl))
   }
 }
+
+export const optionalAuth = (req: any, res: Response, next: NextFunction) => {
+  try {
+    auth(req, res, next)
+  } catch {
+    next()
+  }
+}

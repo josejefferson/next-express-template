@@ -34,7 +34,6 @@ export default function Nav({
       bg={useColorModeValue('gray.100', 'gray.900')}
       pl={1}
       pr={4}
-      borderTop="10px solid #8257e5"
       userSelect="none"
       {...navProps}
     >

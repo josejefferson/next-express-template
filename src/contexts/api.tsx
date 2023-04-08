@@ -29,6 +29,7 @@ export interface IProps {
   disableErrorChild?: boolean
   disableLoginRedirect?: boolean
   refreshEmitter?: any
+  alwaysShowLoading?: boolean
   axiosOptions?: any
   axiosThen?: (value: AxiosResponse<any, any>) => any
   axiosCatch?: (err: any) => any
@@ -49,6 +50,7 @@ export default function API({
   disableErrorChild,
   disableLoginRedirect,
   refreshEmitter,
+  alwaysShowLoading,
   axiosOptions,
   axiosThen,
   axiosCatch,
@@ -65,7 +67,7 @@ export default function API({
   const fetchData = useCallback(
     (showLoading = false) => {
       if (disable) return
-      if (showLoading) {
+      if (showLoading || alwaysShowLoading) {
         setLoading(true)
         setError(null)
       }
@@ -85,7 +87,16 @@ export default function API({
         })
         .finally(() => setLoading(false))
     },
-    [url, axiosOptions, disable, router, disableLoginRedirect, axiosThen, axiosCatch]
+    [
+      disable,
+      alwaysShowLoading,
+      url,
+      axiosOptions,
+      axiosThen,
+      axiosCatch,
+      disableLoginRedirect,
+      router
+    ]
   )
 
   if (refreshEmitter) refreshEmitter.on('refresh', fetchData)

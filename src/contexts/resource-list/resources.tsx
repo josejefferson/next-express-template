@@ -16,7 +16,7 @@ const Resources = withErrorBoundary(
     const { data } = apiContext
     const { name, nameFem, id, url, removeURL, layout, useGridAndListLayout, listLayout } =
       useResourceList()
-    const [showList, setShowList] = useLocalStorageState('showList-' + name, {
+    const [showList, setShowList] = useLocalStorageState('showList-' + id, {
       defaultValue: false
     })
     const Layout: any = useGridAndListLayout ? (showList ? listLayout : layout) : layout ?? Fragment

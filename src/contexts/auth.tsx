@@ -1,12 +1,13 @@
+import type { IUser } from '#types/user'
+import api from '#utils/api'
+import { getLoginURL } from '#utils/helpers'
+import { can } from '#utils/permissions'
 import { useToast } from '@chakra-ui/toast'
 import { useRouter } from 'next/router'
 import type { ReactNode } from 'react'
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import type { IUser } from '#types/user'
-import api from '#utils/api'
-import { getLoginURL } from '#utils/helpers'
-import { can } from '#utils/permissions'
+import useLocalStorageState from 'use-local-storage-state'
 
 export interface IValue {
   user: any
@@ -36,7 +37,7 @@ export default function AuthProvider({ children }: IProps) {
   const toast = useToast()
   const router = useRouter()
   const [cookie, setCookie, removeCookie] = useCookies(['authorization'])
-  const [user, setUser] = useState<IUser>()
+  const [user, setUser, { removeItem: removeUser }] = useLocalStorageState<IUser>('authuser')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -49,7 +50,7 @@ export default function AuthProvider({ children }: IProps) {
       })
       .catch((err) => setError(err))
       .finally(() => setLoading(false))
-  }, [])
+  }, [setUser])
 
   const login = () => {
     router.replace(getLoginURL())
@@ -57,6 +58,7 @@ export default function AuthProvider({ children }: IProps) {
 
   const logout = () => {
     removeCookie('authorization', { path: '/' })
+    removeUser()
     toast({
       title: 'Saindo...',
       status: 'loading',

@@ -53,7 +53,7 @@ function Item({ item }: { item: IItem }) {
       <Button colorScheme="gray">
         <Center flexDirection="column">
           {<item.icon size={56} />}
-          <Text fontWeight={500} mt={2}>
+          <Text fontWeight={500} mt={2} whiteSpace="break-spaces">
             {item.name}
           </Text>
         </Center>

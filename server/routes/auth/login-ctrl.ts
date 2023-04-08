@@ -24,7 +24,7 @@ const loginCtrl = async (req: Request, res: Response) => {
     expiresIn: 30 * 24 * 60 * 60
   })
 
-  return res.json({ token, name: user.name })
+  return res.json({ token, name: user.name, photo: user.photo, nickname: user.nickname })
 }
 
 export default loginCtrl
