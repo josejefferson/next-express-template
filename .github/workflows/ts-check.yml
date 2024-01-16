@@ -20,4 +20,4 @@ jobs:
       - name: Installing dependencies
         run: yarn
       - name: Checking TypeScript Types
-        run: yarn check-types
+        run: yarn test
