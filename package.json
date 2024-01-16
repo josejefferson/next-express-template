@@ -8,7 +8,7 @@
     "build": "rimraf .next dist && npm run build:next && npm run build:server",
     "build:server": "tsc --project tsconfig.server.json",
     "format": "prettier -w .",
-    "check-types": "tsc --noEmit && tsc --project tsconfig.server.json --noEmit",
+    "test": "tsc --noEmit && tsc --project tsconfig.server.json --noEmit",
     "start:next": "next start",
     "dev:next": "next dev",
     "build:next": "next build",

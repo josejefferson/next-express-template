@@ -44,6 +44,19 @@ yarn build
 yarn start
 ```
 
+## Comandos
+- `yarn start` - Inicia o projeto em modo de produção
+- `yarn start:next` - Inicia o front-end em modo de produção
+- `yarn dev` - Inicia o projeto em modo de desenvolvimento
+- `yarn dev:next` - Inicia o front-end em modo de desenvolvimento
+- `yarn build` - Prepara para produção
+- `yarn build:server` - Prepara apenas o back-end para produção
+- `yarn build:next` - Prepara apenas o front-end para produção
+- `yarn format` - Formata os arquivos usando Prettier
+- `yarn lint` - Valida o estilo dos arquivos usando ESLint
+- `yarn test` - Executa os testes do TypeScript
+- `yarn export` - Exporta o projeto para HTML básico
+
 ## Screenshots
 ### Tela inicial do sistema, é possível adicionar mais blocos contendo outras entidades
 ![Tela inicial do sistema](https://github.com/josejefferson/next-express-template/assets/52979246/e48d9936-35bf-46ab-8d10-5b9a3f969ddd)
